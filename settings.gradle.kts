@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "DiscogsTrackr"
-include ':app'
+include("app")
