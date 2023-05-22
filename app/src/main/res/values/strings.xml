@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">DiscogsTrackr</string>
+    <string name="label_search">Search</string>
+    <string name="label_favorites">Favorites</string>
 </resources>
