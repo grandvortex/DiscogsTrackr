@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.presentation
+package com.grandvortex.discogstrackr
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +12,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.grandvortex.discogstrackr.navigation.DiscogsNavBar
+import com.grandvortex.discogstrackr.navigation.DiscogsNavHost
+import com.grandvortex.discogstrackr.navigation.NavDestinations
+import com.grandvortex.discogstrackr.navigation.Screen
+import com.grandvortex.discogstrackr.navigation.navigateToScreen
 import com.grandvortex.discogstrackr.theme.DiscogsTrackrTheme
 
 @Composable

@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.presentation.search
+package com.grandvortex.discogstrackr.feature.search
 
 import androidx.compose.runtime.Composable
 

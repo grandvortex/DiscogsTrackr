@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.presentation
+package com.grandvortex.discogstrackr.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
@@ -10,10 +10,10 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.grandvortex.discogstrackr.R
-import com.grandvortex.discogstrackr.presentation.favorites.favoritesScreen
-import com.grandvortex.discogstrackr.presentation.favorites.navigateToFavoritesScreen
-import com.grandvortex.discogstrackr.presentation.search.navigateToSearchScreen
-import com.grandvortex.discogstrackr.presentation.search.searchScreen
+import com.grandvortex.discogstrackr.feature.favorites.favoritesScreen
+import com.grandvortex.discogstrackr.feature.favorites.navigateToFavoritesScreen
+import com.grandvortex.discogstrackr.feature.search.navigateToSearchScreen
+import com.grandvortex.discogstrackr.feature.search.searchScreen
 
 // Destination Routes
 object NavDestinations {

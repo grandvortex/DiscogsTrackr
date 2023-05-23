@@ -1,10 +1,10 @@
-package com.grandvortex.discogstrackr.presentation.search
+package com.grandvortex.discogstrackr.feature.search
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.grandvortex.discogstrackr.presentation.NavDestinations
+import com.grandvortex.discogstrackr.navigation.NavDestinations
 
 fun NavGraphBuilder.searchScreen() {
     composable(route = NavDestinations.SEARCH_ROUTE) {
