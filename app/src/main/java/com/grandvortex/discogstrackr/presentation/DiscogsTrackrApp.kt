@@ -1,6 +1,6 @@
 package com.grandvortex.discogstrackr.presentation
 
-import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -18,9 +18,6 @@ import com.grandvortex.discogstrackr.theme.DiscogsTrackrTheme
 fun DiscogsTrackrApp() {
     DiscogsTrackrTheme {
         val navController = rememberNavController()
-        val navigationActions = remember(navController) {
-            NavigationActions(navController)
-        }
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route ?: NavDestinations.SEARCH_ROUTE
@@ -31,11 +28,15 @@ fun DiscogsTrackrApp() {
             modifier = Modifier.fillMaxSize(),
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
             topBar = {},
-            bottomBar = { DiscogsNavBar(currentRoute, navigationActions) }
+            bottomBar = {
+                DiscogsNavBar(
+                    currentRoute
+                ) { screen: Screen -> navigateToScreen(navController, screen) }
+            }
         ) { paddingValues ->
-            Box(
+            Row(
                 modifier = Modifier.fillMaxSize().padding(paddingValues)
-            ) {}
+            ) { DiscogsNavHost(navController = navController) }
         }
     }
 }

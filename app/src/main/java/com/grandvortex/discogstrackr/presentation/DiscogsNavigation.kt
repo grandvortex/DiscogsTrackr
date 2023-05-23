@@ -4,10 +4,16 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.navigation.NavController
-import androidx.navigation.NavGraph.Companion.findStartDestination
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
 import com.grandvortex.discogstrackr.R
+import com.grandvortex.discogstrackr.presentation.favorites.favoritesScreen
+import com.grandvortex.discogstrackr.presentation.favorites.navigateToFavoritesScreen
+import com.grandvortex.discogstrackr.presentation.search.navigateToSearchScreen
+import com.grandvortex.discogstrackr.presentation.search.searchScreen
 
 // Destination Routes
 object NavDestinations {
@@ -28,37 +34,21 @@ val bottomNavList = listOf(
     Screen.Favorites
 )
 
-class NavigationActions(navController: NavController) {
-    private val navigateToSearch: () -> Unit = {
-        navController.navigate(NavDestinations.SEARCH_ROUTE) {
-            // Pop up to the start destination of the graph to
-            // avoid building up a large stack of destinations
-            // on the back stack as users select itmes
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            // Avoid multiple copies of the same destination when
-            // reselection the same item
-            launchSingleTop = true
-            // Restore state when re-selecting a previously selected item
-            restoreState = true
-        }
+fun navigateToScreen(navController: NavHostController, screen: Screen) {
+    when (screen) {
+        Screen.Search -> navController.navigateToSearchScreen()
+        Screen.Favorites -> navController.navigateToFavoritesScreen()
     }
+}
 
-    private val navigateToFavorites: () -> Unit = {
-        navController.navigate(NavDestinations.FAVORITES_ROUTE) {
-            popUpTo(navController.graph.findStartDestination().id) {
-                saveState = true
-            }
-            launchSingleTop = true
-            restoreState = true
-        }
-    }
-
-    fun getNavAction(screen: Screen): () -> Unit {
-        return when (screen) {
-            Screen.Search -> navigateToSearch
-            Screen.Favorites -> navigateToFavorites
-        }
+@Composable
+fun DiscogsNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+    NavHost(
+        navController = navController,
+        startDestination = NavDestinations.SEARCH_ROUTE,
+        modifier = modifier
+    ) {
+        searchScreen()
+        favoritesScreen()
     }
 }

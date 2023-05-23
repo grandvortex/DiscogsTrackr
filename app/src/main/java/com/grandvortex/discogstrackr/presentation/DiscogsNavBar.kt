@@ -9,12 +9,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 
 @Composable
-fun DiscogsNavBar(currentRoute: String, navActions: NavigationActions) {
+fun DiscogsNavBar(currentRoute: String, navigateToScreen: (screen: Screen) -> Unit) {
     NavigationBar(containerColor = MaterialTheme.colorScheme.primary) {
         bottomNavList.forEach { bottomNavItem ->
             NavigationBarItem(
                 selected = currentRoute == bottomNavItem.route,
-                onClick = { navActions.getNavAction(bottomNavItem) },
+                onClick = { navigateToScreen(bottomNavItem) },
                 icon = {
                     Icon(imageVector = bottomNavItem.icon, contentDescription = "")
                 },
