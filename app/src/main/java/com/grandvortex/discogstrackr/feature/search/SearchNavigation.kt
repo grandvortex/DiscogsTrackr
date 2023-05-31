@@ -4,16 +4,17 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.grandvortex.discogstrackr.navigation.NavDestinations
+
+const val SEARCH_ROUTE = "search"
 
 fun NavGraphBuilder.searchScreen() {
-    composable(route = NavDestinations.SEARCH_ROUTE) {
-        SearchScreen()
+    composable(route = SEARCH_ROUTE) {
+        SearchRoute()
     }
 }
 
 fun NavController.navigateToSearchScreen() {
-    navigate(NavDestinations.SEARCH_ROUTE) {
+    navigate(SEARCH_ROUTE) {
         // Pop up to the start destination of the graph to
         // avoid building up a large stack of destinations
         // on the back stack as users select items

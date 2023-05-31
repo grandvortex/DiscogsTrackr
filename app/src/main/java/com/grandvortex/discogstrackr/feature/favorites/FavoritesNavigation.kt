@@ -4,16 +4,17 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.grandvortex.discogstrackr.navigation.NavDestinations
+
+const val FAVORITES_ROUTE = "favorites"
 
 fun NavGraphBuilder.favoritesScreen() {
-    composable(route = NavDestinations.FAVORITES_ROUTE) {
+    composable(route = FAVORITES_ROUTE) {
         FavoritesScreen()
     }
 }
 
 fun NavController.navigateToFavoritesScreen() {
-    navigate(NavDestinations.FAVORITES_ROUTE) {
+    navigate(FAVORITES_ROUTE) {
         popUpTo(graph.findStartDestination().id) {
             saveState = true
         }

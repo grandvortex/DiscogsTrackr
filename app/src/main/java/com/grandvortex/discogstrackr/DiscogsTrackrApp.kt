@@ -1,6 +1,5 @@
 package com.grandvortex.discogstrackr
 
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -12,12 +11,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.grandvortex.discogstrackr.feature.search.SEARCH_ROUTE
 import com.grandvortex.discogstrackr.navigation.DiscogsNavBar
 import com.grandvortex.discogstrackr.navigation.DiscogsNavHost
-import com.grandvortex.discogstrackr.navigation.NavDestinations
 import com.grandvortex.discogstrackr.navigation.Screen
 import com.grandvortex.discogstrackr.navigation.navigateToScreen
 import com.grandvortex.discogstrackr.theme.DiscogsTrackrTheme
+import com.grandvortex.discogstrackr.utils.DevicePreviews
 
 @Composable
 fun DiscogsTrackrApp() {
@@ -25,7 +25,7 @@ fun DiscogsTrackrApp() {
         val navController = rememberNavController()
 
         val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route ?: NavDestinations.SEARCH_ROUTE
+        val currentRoute = navBackStackEntry?.destination?.route ?: SEARCH_ROUTE
 
         val snackbarHostState = remember { SnackbarHostState() }
 
@@ -39,9 +39,16 @@ fun DiscogsTrackrApp() {
                 ) { screen: Screen -> navigateToScreen(navController, screen) }
             }
         ) { paddingValues ->
-            Row(
-                modifier = Modifier.fillMaxSize().padding(paddingValues)
-            ) { DiscogsNavHost(navController = navController) }
+            DiscogsNavHost(
+                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                navController = navController
+            )
         }
     }
+}
+
+@DevicePreviews
+@Composable
+fun DiscogsTrackrAppPreview() {
+    DiscogsTrackrApp()
 }
