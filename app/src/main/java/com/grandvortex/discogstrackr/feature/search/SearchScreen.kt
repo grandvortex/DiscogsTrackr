@@ -58,21 +58,26 @@ fun SearchScreen(
 ) {
     val onSearchTriggeredFinal = {
         onSearchActiveChanged(false)
-        onSearchTriggered()
+        if (searchQuery.isNotEmpty()) {
+            onSearchTriggered()
+        }
     }
 
     Box(
         modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.secondary)
     ) {
         SearchBar(
-            modifier = modifier.fillMaxWidth().align(Alignment.TopCenter).onKeyEvent {
-                if (it.key == Key.Enter) {
-                    onSearchTriggeredFinal()
-                    true
-                } else {
-                    false
-                }
-            },
+            modifier = modifier
+                .fillMaxWidth()
+                .align(Alignment.TopCenter)
+                .onKeyEvent {
+                    if (it.key == Key.Enter) {
+                        onSearchTriggeredFinal()
+                        true
+                    } else {
+                        false
+                    }
+                },
             query = searchQuery,
             onQueryChange = { onSearchQueryChanged(it) },
             onSearch = {
