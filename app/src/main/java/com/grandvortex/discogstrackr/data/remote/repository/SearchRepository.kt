@@ -1,8 +1,7 @@
 package com.grandvortex.discogstrackr.data.remote.repository
 
-import com.grandvortex.discogstrackr.domain.model.SearchResults
-import kotlinx.coroutines.flow.Flow
+import com.grandvortex.discogstrackr.data.model.SearchResults
 
 interface SearchRepository {
-    fun search(query: String): Flow<SearchResults>
+    suspend fun search(query: String): NetworkResult<SearchResults>
 }

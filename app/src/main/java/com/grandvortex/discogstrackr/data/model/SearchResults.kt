@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.domain.model
+package com.grandvortex.discogstrackr.data.model
 
 data class SearchResults(
     val pagination: Pagination,
@@ -9,7 +9,7 @@ data class Pagination(
     val items: Int,
     val page: Int,
     val pages: Int,
-    val per_page: Int,
+    val perPage: Int,
     val urls: Urls
 )
 
@@ -36,15 +36,15 @@ data class SearchResult(
     val catno: String,
     val community: Community,
     val country: String,
-    val cover_image: String,
+    val coverImage: String,
     val format: List<String>,
-    val format_quantity: Int,
+    val formatQuantity: Int,
     val formats: List<Format>,
     val genre: List<String>,
     val label: List<String>,
-    val master_id: Int,
-    val master_url: String,
-    val resource_url: String,
+    val masterId: Int,
+    val masterUrl: String,
+    val resourceUrl: String,
     val style: List<String>,
     val thumb: String,
     val title: String,

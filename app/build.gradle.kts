@@ -18,10 +18,16 @@ android {
         versionName = "1.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
+
+        // Discogs key and secret to use their services
+        buildConfigField("String", "KEY", "\"ABvycztVyPKHEkutPDNQ\"")
+        buildConfigField("String", "SECRET", "\"xtjhIkDzviXawzrOPTfkxXArxLeLZiso\"")
     }
 
     buildTypes {
         getByName("release") {
+            isDebuggable = false
+
             // Enables code shrinking, obfuscation, and optimization for only
             // your project's release build type. Make sure to use a build
             // variant with `isDebuggable=false`.
@@ -30,6 +36,8 @@ android {
             // Enables resource shrinking, which is performed by the
             // Android Gradle plugin.
             isShrinkResources = true
+
+            buildConfigField("String", "BASE_URL", "\"https://api.discogs.com/\"")
 
             // Includes the default ProGuard rules files that are packaged with
             // the Android Gradle plugin. To learn more, go to the section about
@@ -41,6 +49,9 @@ android {
         }
         getByName("debug") {
             isDebuggable = true
+            isMinifyEnabled = false
+            isShrinkResources = false
+            buildConfigField("String", "BASE_URL", "\"https://api.discogs.com/\"")
         }
     }
     compileOptions {
@@ -52,6 +63,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.7"
@@ -83,7 +95,7 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.navigation:navigation-compose:2.5.3")
+    implementation("androidx.navigation:navigation-compose:2.6.0")
     implementation("androidx.activity:activity-compose:1.7.2")
 
     // Lifecycle Scopes and Architectural Components
