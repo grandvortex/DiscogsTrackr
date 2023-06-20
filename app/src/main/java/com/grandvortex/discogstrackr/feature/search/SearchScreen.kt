@@ -33,13 +33,13 @@ fun SearchRoute(
     modifier: Modifier = Modifier,
     searchViewModel: SearchViewModel = hiltViewModel()
 ) {
-    val searchQuery by searchViewModel.searchQuery.collectAsStateWithLifecycle()
-    val searchActive by searchViewModel.searchActive.collectAsStateWithLifecycle()
+    val viewState by searchViewModel.viewState.collectAsStateWithLifecycle()
+    val queryText by searchViewModel.queryText
 
     SearchScreen(
         modifier = modifier,
-        searchQuery = searchQuery,
-        searchActive = searchActive,
+        viewState = viewState,
+        queryText = queryText,
         onSearchActiveChanged = searchViewModel::onSearchActiveChanged,
         onSearchTriggered = searchViewModel::onSearchTriggered,
         onSearchQueryChanged = searchViewModel::onSearchQueryChanged
@@ -50,40 +50,35 @@ fun SearchRoute(
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    searchQuery: String = "",
-    searchActive: Boolean = false,
+    viewState: SearchState = SearchState(),
+    queryText: String = "",
     onSearchActiveChanged: (Boolean) -> Unit = {},
     onSearchTriggered: () -> Unit = {},
     onSearchQueryChanged: (String) -> Unit = {}
 ) {
     val onSearchTriggeredFinal = {
         onSearchActiveChanged(false)
-        if (searchQuery.isNotEmpty()) {
-            onSearchTriggered()
-        }
+        onSearchTriggered()
     }
 
     Box(
         modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.secondary)
     ) {
         SearchBar(
-            modifier = modifier
-                .fillMaxWidth()
-                .align(Alignment.TopCenter)
-                .onKeyEvent {
-                    if (it.key == Key.Enter) {
-                        onSearchTriggeredFinal()
-                        true
-                    } else {
-                        false
-                    }
-                },
-            query = searchQuery,
+            modifier = modifier.fillMaxWidth().align(Alignment.TopCenter).onKeyEvent {
+                if (it.key == Key.Enter) {
+                    onSearchTriggeredFinal()
+                    true
+                } else {
+                    false
+                }
+            },
+            query = queryText,
             onQueryChange = { onSearchQueryChanged(it) },
             onSearch = {
                 onSearchTriggeredFinal()
             },
-            active = searchActive,
+            active = viewState.isSearchActive,
             onActiveChange = { onSearchActiveChanged(it) },
             placeholder = { Text(stringResource(id = R.string.search_hint)) },
             leadingIcon = {
@@ -96,10 +91,10 @@ fun SearchScreen(
                 )
             },
             trailingIcon = {
-                if (searchActive) {
+                if (viewState.isSearchActive) {
                     Icon(
                         modifier = modifier.clickable {
-                            if (searchQuery.isEmpty()) {
+                            if (queryText.isEmpty()) {
                                 onSearchActiveChanged(false)
                             } else {
                                 onSearchQueryChanged("")

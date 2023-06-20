@@ -5,7 +5,7 @@ import retrofit2.HttpException
 sealed class NetworkResult<out T> {
     data class Success<out T>(val data: T) : NetworkResult<T>()
     data class HttpError(val code: Int, val message: String) : NetworkResult<Nothing>()
-    data class NetworkError(val e: Throwable) : NetworkResult<Nothing>()
+    data class NetworkError(val e: Throwable, val message: String) : NetworkResult<Nothing>()
 }
 
 suspend fun <T> safeNetworkCall(networkCall: suspend () -> T): NetworkResult<T> {
@@ -19,7 +19,7 @@ suspend fun <T> safeNetworkCall(networkCall: suspend () -> T): NetworkResult<T> 
                 NetworkResult.HttpError(code, message)
             }
 
-            else -> NetworkResult.NetworkError(throwable)
+            else -> NetworkResult.NetworkError(throwable, throwable.message ?: "")
         }
     }
 }

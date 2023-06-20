@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.data
+package com.grandvortex.discogstrackr.data.mapper
 
 import com.grandvortex.discogstrackr.data.model.Community
 import com.grandvortex.discogstrackr.data.model.Format
@@ -6,9 +6,9 @@ import com.grandvortex.discogstrackr.data.model.Pagination
 import com.grandvortex.discogstrackr.data.model.SearchResult
 import com.grandvortex.discogstrackr.data.model.SearchResults
 import com.grandvortex.discogstrackr.data.model.Urls
-import com.grandvortex.discogstrackr.data.remote.model.SearchResultsRemote
+import com.grandvortex.discogstrackr.data.remote.dto.SearchResultsDTO
 
-fun SearchResultsRemote.toSearchResults(): SearchResults {
+fun SearchResultsDTO.toSearchResults(): SearchResults {
     val remoteUrls = pagination.urls
     val urls = Urls(
         last = remoteUrls?.last ?: "",

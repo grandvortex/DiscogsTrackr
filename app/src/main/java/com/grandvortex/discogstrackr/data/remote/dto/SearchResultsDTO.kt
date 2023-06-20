@@ -1,25 +1,25 @@
-package com.grandvortex.discogstrackr.data.remote.model
+package com.grandvortex.discogstrackr.data.remote.dto
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class SearchResultsRemote(
-    @Json(name = "pagination") val pagination: PaginationRemote,
-    @Json(name = "results") val results: List<SearchResultRemote>
+data class SearchResultsDTO(
+    @Json(name = "pagination") val pagination: PaginationDTO,
+    @Json(name = "results") val results: List<SearchResultDTO>
 )
 
 @JsonClass(generateAdapter = true)
-data class PaginationRemote(
+data class PaginationDTO(
     @Json(name = "items") val items: Int,
     @Json(name = "page") val page: Int,
     @Json(name = "pages") val pages: Int,
     @Json(name = "per_page") val perPage: Int,
-    @Json(name = "urls") val urls: UrlsRemote?
+    @Json(name = "urls") val urls: UrlsDTO?
 )
 
 @JsonClass(generateAdapter = true)
-data class UrlsRemote(
+data class UrlsDTO(
     @Json(name = "last") val last: String,
     @Json(name = "next") val next: String,
     @Json(name = "prev") val prev: String,
@@ -27,13 +27,13 @@ data class UrlsRemote(
 )
 
 @JsonClass(generateAdapter = true)
-data class CommunityRemote(
+data class CommunityDTO(
     @Json(name = "have") val have: Int,
     @Json(name = "want") val want: Int
 )
 
 @JsonClass(generateAdapter = true)
-data class FormatRemote(
+data class FormatDTO(
     @Json(name = "descriptions") val descriptions: List<String>?,
     @Json(name = "name") val name: String,
     @Json(name = "qty") val qty: String,
@@ -41,15 +41,15 @@ data class FormatRemote(
 )
 
 @JsonClass(generateAdapter = true)
-data class SearchResultRemote(
+data class SearchResultDTO(
     @Json(name = "barcode") val barcode: List<String>?,
     @Json(name = "catno") val catno: String,
-    @Json(name = "community") val community: CommunityRemote?,
+    @Json(name = "community") val community: CommunityDTO?,
     @Json(name = "country") val country: String,
     @Json(name = "cover_image") val coverImage: String,
     @Json(name = "format") val format: List<String>?,
     @Json(name = "format_quantity") val formatQuantity: Int,
-    @Json(name = "formats") val formats: List<FormatRemote>?,
+    @Json(name = "formats") val formats: List<FormatDTO>?,
     @Json(name = "genre") val genre: List<String>?,
     @Json(name = "id") val id: Int,
     @Json(name = "label") val label: List<String>?,
