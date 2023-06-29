@@ -11,11 +11,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.grandvortex.discogstrackr.feature.search.SEARCH_ROUTE
-import com.grandvortex.discogstrackr.navigation.DiscogsNavBar
-import com.grandvortex.discogstrackr.navigation.DiscogsNavHost
-import com.grandvortex.discogstrackr.navigation.Screen
-import com.grandvortex.discogstrackr.navigation.navigateToScreen
+import com.grandvortex.discogstrackr.presentation.feature.search.SEARCH_ROUTE
+import com.grandvortex.discogstrackr.presentation.navigation.DiscogsNavBar
+import com.grandvortex.discogstrackr.presentation.navigation.DiscogsNavHost
+import com.grandvortex.discogstrackr.presentation.navigation.Screen
+import com.grandvortex.discogstrackr.presentation.navigation.navigateToScreen
 import com.grandvortex.discogstrackr.theme.DiscogsTrackrTheme
 import com.grandvortex.discogstrackr.utils.DevicePreviews
 

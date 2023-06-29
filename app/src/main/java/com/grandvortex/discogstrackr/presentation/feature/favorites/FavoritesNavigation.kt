@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.feature.favorites
+package com.grandvortex.discogstrackr.presentation.feature.favorites
 
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination

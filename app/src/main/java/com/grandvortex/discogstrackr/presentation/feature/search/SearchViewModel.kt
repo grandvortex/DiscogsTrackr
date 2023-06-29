@@ -1,11 +1,11 @@
-package com.grandvortex.discogstrackr.feature.search
+package com.grandvortex.discogstrackr.presentation.feature.search
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.grandvortex.discogstrackr.data.remote.repository.NetworkResult
+import com.grandvortex.discogstrackr.data.Result
 import com.grandvortex.discogstrackr.domain.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -39,25 +39,19 @@ class SearchViewModel @Inject constructor(
 
     fun onSearchTriggered() {
         if (queryText.value.isNotEmpty()) {
-            _viewState.update { state -> state.copy(isLoading = true) }
-
             viewModelScope.launch {
+                _viewState.update { state -> state.copy(isLoading = true) }
                 when (val result = searchUseCase.invoke(queryText.value)) {
-                    is NetworkResult.Success -> {
+                    is Result.Success -> {
                         _viewState.update { state -> state.copy(data = result.data) }
                     }
 
-                    is NetworkResult.HttpError -> {
-                        _viewState.update { state -> state.copy(error = result.message) }
-                    }
-
-                    is NetworkResult.NetworkError -> {
-                        _viewState.update { state -> state.copy(error = result.message) }
+                    is Result.Error -> {
+                        _viewState.update { state -> state.copy(error = result.e.message ?: "") }
                     }
                 }
+                _viewState.update { state -> state.copy(isLoading = false) }
             }
-
-            _viewState.update { state -> state.copy(isLoading = false) }
         }
     }
 

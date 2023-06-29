@@ -1,9 +1,14 @@
 package com.grandvortex.discogstrackr.di
 
+import android.util.Log
 import com.grandvortex.discogstrackr.BuildConfig
 import com.grandvortex.discogstrackr.data.remote.repository.SearchRepository
 import com.grandvortex.discogstrackr.data.remote.repository.SearchRepositoryDefault
 import com.grandvortex.discogstrackr.data.remote.retrofit.RemoteService
+import com.grandvortex.discogstrackr.utils.BaseUrl
+import com.grandvortex.discogstrackr.utils.Credentials
+import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -37,8 +42,10 @@ object NetworkModule {
     fun provideOkHttpClient(httpAuthInterceptor: Interceptor): OkHttpClient =
         OkHttpClient.Builder().apply {
             if (BuildConfig.DEBUG) {
-                addInterceptor(
-                    HttpLoggingInterceptor().apply {
+                addNetworkInterceptor(
+                    HttpLoggingInterceptor { message ->
+                        Log.d("DTOKHTTP", message)
+                    }.apply {
                         level = HttpLoggingInterceptor.Level.BODY
                     }
                 )
@@ -48,9 +55,18 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideRetrofit(okHttpClient: OkHttpClient, baseUrl: BaseUrl): Retrofit =
-        Retrofit.Builder().baseUrl(baseUrl.value).client(okHttpClient)
-            .addConverterFactory(MoshiConverterFactory.create()).build()
+    fun provideMoshiConverter(): MoshiConverterFactory = MoshiConverterFactory.create(
+        Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+    )
+
+    @Singleton
+    @Provides
+    fun provideRetrofit(
+        okHttpClient: OkHttpClient,
+        baseUrl: BaseUrl,
+        moshiConverter: MoshiConverterFactory
+    ): Retrofit = Retrofit.Builder().baseUrl(baseUrl.value).client(okHttpClient)
+        .addConverterFactory(moshiConverter).build()
 
     @Singleton
     @Provides

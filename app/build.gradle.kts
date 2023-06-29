@@ -85,6 +85,7 @@ dependencies {
     val hiltVersion = "2.46.1"
     val retrofitVersion = "2.9.0"
     val coroutinesVersion = "1.7.1"
+    val moshiVersion = "1.14.0"
 
     // Compose
     implementation(composeBOM)
@@ -116,9 +117,11 @@ dependencies {
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
 
-    // Retrofit
+    // Retrofit and Moshi
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
+    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
 
     // Hilt
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")

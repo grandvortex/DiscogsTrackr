@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.feature.search
+package com.grandvortex.discogstrackr.presentation.feature.search
 
 import com.grandvortex.discogstrackr.data.model.SearchResults
 

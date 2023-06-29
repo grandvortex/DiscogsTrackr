@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.di
+package com.grandvortex.discogstrackr.utils
 
 import com.grandvortex.discogstrackr.BuildConfig
 

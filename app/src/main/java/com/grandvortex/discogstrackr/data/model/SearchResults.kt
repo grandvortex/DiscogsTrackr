@@ -15,7 +15,9 @@ data class Pagination(
 
 data class Urls(
     val last: String,
-    val next: String
+    val next: String,
+    val prev: String,
+    val first: String
 )
 
 data class Community(

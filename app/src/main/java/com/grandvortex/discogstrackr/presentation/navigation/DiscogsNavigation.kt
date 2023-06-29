@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.navigation
+package com.grandvortex.discogstrackr.presentation.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
@@ -10,12 +10,12 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.grandvortex.discogstrackr.R
-import com.grandvortex.discogstrackr.feature.favorites.FAVORITES_ROUTE
-import com.grandvortex.discogstrackr.feature.favorites.favoritesScreen
-import com.grandvortex.discogstrackr.feature.favorites.navigateToFavoritesScreen
-import com.grandvortex.discogstrackr.feature.search.SEARCH_ROUTE
-import com.grandvortex.discogstrackr.feature.search.navigateToSearchScreen
-import com.grandvortex.discogstrackr.feature.search.searchScreen
+import com.grandvortex.discogstrackr.presentation.feature.favorites.FAVORITES_ROUTE
+import com.grandvortex.discogstrackr.presentation.feature.favorites.favoritesScreen
+import com.grandvortex.discogstrackr.presentation.feature.favorites.navigateToFavoritesScreen
+import com.grandvortex.discogstrackr.presentation.feature.search.SEARCH_ROUTE
+import com.grandvortex.discogstrackr.presentation.feature.search.navigateToSearchScreen
+import com.grandvortex.discogstrackr.presentation.feature.search.searchScreen
 
 // Screens
 sealed class Screen(val route: String, @StringRes val label: Int, val icon: ImageVector) {
