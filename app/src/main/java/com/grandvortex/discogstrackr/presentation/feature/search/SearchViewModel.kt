@@ -43,14 +43,23 @@ class SearchViewModel @Inject constructor(
                 _viewState.update { state -> state.copy(isLoading = true) }
                 when (val result = searchUseCase.invoke(queryText.value)) {
                     is Result.Success -> {
-                        _viewState.update { state -> state.copy(data = result.data) }
+                        _viewState.update { state ->
+                            state.copy(
+                                data = result.data,
+                                isLoading = false
+                            )
+                        }
                     }
 
                     is Result.Error -> {
-                        _viewState.update { state -> state.copy(error = result.e.message ?: "") }
+                        _viewState.update { state ->
+                            state.copy(
+                                error = result.e.message ?: "",
+                                isLoading = false
+                            )
+                        }
                     }
                 }
-                _viewState.update { state -> state.copy(isLoading = false) }
             }
         }
     }

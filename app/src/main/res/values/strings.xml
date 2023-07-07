@@ -2,5 +2,6 @@
     <string name="app_name">DiscogsTrackr</string>
     <string name="nav_label_search">Search</string>
     <string name="nav_label_favorites">Favorites</string>
+    <string name="nav_label_details">Details</string>
     <string name="search_hint">Enter your search</string>
 </resources>

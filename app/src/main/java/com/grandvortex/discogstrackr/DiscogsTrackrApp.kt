@@ -14,8 +14,8 @@ import androidx.navigation.compose.rememberNavController
 import com.grandvortex.discogstrackr.presentation.feature.search.SEARCH_ROUTE
 import com.grandvortex.discogstrackr.presentation.navigation.DiscogsNavBar
 import com.grandvortex.discogstrackr.presentation.navigation.DiscogsNavHost
-import com.grandvortex.discogstrackr.presentation.navigation.Screen
-import com.grandvortex.discogstrackr.presentation.navigation.navigateToScreen
+import com.grandvortex.discogstrackr.presentation.navigation.TabScreen
+import com.grandvortex.discogstrackr.presentation.navigation.navigateToTabScreen
 import com.grandvortex.discogstrackr.theme.DiscogsTrackrTheme
 import com.grandvortex.discogstrackr.utils.DevicePreviews
 
@@ -36,7 +36,7 @@ fun DiscogsTrackrApp() {
             bottomBar = {
                 DiscogsNavBar(
                     currentRoute
-                ) { screen: Screen -> navigateToScreen(navController, screen) }
+                ) { screen: TabScreen -> navigateToTabScreen(navController, screen) }
             }
         ) { paddingValues ->
             DiscogsNavHost(

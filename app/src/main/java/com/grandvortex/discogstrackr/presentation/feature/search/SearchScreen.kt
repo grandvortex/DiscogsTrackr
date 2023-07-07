@@ -3,8 +3,10 @@ package com.grandvortex.discogstrackr.presentation.feature.search
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -22,6 +24,7 @@ import androidx.compose.ui.input.key.Key
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.grandvortex.discogstrackr.R
@@ -31,7 +34,8 @@ import com.grandvortex.discogstrackr.utils.DevicePreviews
 @Composable
 fun SearchRoute(
     modifier: Modifier = Modifier,
-    searchViewModel: SearchViewModel = hiltViewModel()
+    searchViewModel: SearchViewModel = hiltViewModel(),
+    onClickItem: (Int) -> Unit
 ) {
     val viewState by searchViewModel.viewState.collectAsStateWithLifecycle()
     val queryText by searchViewModel.queryText
@@ -42,7 +46,8 @@ fun SearchRoute(
         queryText = queryText,
         onSearchActiveChanged = searchViewModel::onSearchActiveChanged,
         onSearchTriggered = searchViewModel::onSearchTriggered,
-        onSearchQueryChanged = searchViewModel::onSearchQueryChanged
+        onSearchQueryChanged = searchViewModel::onSearchQueryChanged,
+        onClickItem = onClickItem
     )
 }
 
@@ -50,11 +55,12 @@ fun SearchRoute(
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    viewState: SearchState = SearchState(),
+    viewState: SearchState,
     queryText: String = "",
-    onSearchActiveChanged: (Boolean) -> Unit = {},
-    onSearchTriggered: () -> Unit = {},
-    onSearchQueryChanged: (String) -> Unit = {}
+    onSearchActiveChanged: (Boolean) -> Unit,
+    onSearchTriggered: () -> Unit,
+    onSearchQueryChanged: (String) -> Unit,
+    onClickItem: (Int) -> Unit
 ) {
     val onSearchTriggeredFinal = {
         onSearchActiveChanged(false)
@@ -62,17 +68,22 @@ fun SearchScreen(
     }
 
     Box(
-        modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.secondary)
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.secondary)
     ) {
         SearchBar(
-            modifier = modifier.fillMaxWidth().align(Alignment.TopCenter).onKeyEvent {
-                if (it.key == Key.Enter) {
-                    onSearchTriggeredFinal()
-                    true
-                } else {
-                    false
-                }
-            },
+            modifier = modifier
+                .fillMaxWidth()
+                .align(Alignment.TopCenter)
+                .onKeyEvent {
+                    if (it.key == Key.Enter) {
+                        onSearchTriggeredFinal()
+                        true
+                    } else {
+                        false
+                    }
+                },
             query = queryText,
             onQueryChange = { onSearchQueryChanged(it) },
             onSearch = {
@@ -105,7 +116,29 @@ fun SearchScreen(
                     )
                 }
             }
-        ) {}
+        ) {
+            SearchContent(viewState = viewState, onClickItem = onClickItem)
+        }
+    }
+}
+
+@Composable
+fun SearchContent(
+    modifier: Modifier = Modifier,
+    viewState: SearchState,
+    onClickItem: (Int) -> Unit
+) {
+    LazyColumn(modifier = modifier, contentPadding = PaddingValues(all = 4.dp)) {
+        viewState.data?.results?.forEach { result ->
+            val id = result.id
+            item(key = id) {
+                SearchResultItem(
+                    type = result.type,
+                    title = result.title,
+                    onClick = { onClickItem(id) }
+                )
+            }
+        }
     }
 }
 
@@ -113,6 +146,12 @@ fun SearchScreen(
 @Composable
 fun SearchScreenPreview() {
     DiscogsTrackrTheme {
-        SearchScreen()
+        SearchScreen(
+            viewState = SearchState(),
+            onSearchQueryChanged = {},
+            onSearchTriggered = {},
+            onSearchActiveChanged = {},
+            onClickItem = {}
+        )
     }
 }

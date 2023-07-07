@@ -9,7 +9,7 @@ const val FAVORITES_ROUTE = "favorites"
 
 fun NavGraphBuilder.favoritesScreen() {
     composable(route = FAVORITES_ROUTE) {
-        FavoritesScreen()
+        FavoritesRoute()
     }
 }
 
