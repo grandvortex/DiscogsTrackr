@@ -6,19 +6,19 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
-private const val ID = "id"
+private const val ID_PARAM = "id"
 const val DETAILS_ROUTE = "details"
 
 fun NavGraphBuilder.detailsScreen() {
     composable(
-        route = "$DETAILS_ROUTE/{$ID}",
-        arguments = listOf(navArgument(ID) { type = NavType.IntType })
+        route = "$DETAILS_ROUTE/{$ID_PARAM}",
+        arguments = listOf(navArgument(ID_PARAM) { type = NavType.IntType })
     ) { navBackStackEntry ->
-        val id = navBackStackEntry.arguments?.getInt(ID) ?: 0
+        val id = navBackStackEntry.arguments?.getInt(ID_PARAM) ?: -1
         DetailsRoute(id)
     }
 }
 
 fun NavController.navigateToDetailsScreen(id: Int) {
-    navigate("$DETAILS_ROUTE/$id")
+    navigate(route = "$DETAILS_ROUTE/$id")
 }

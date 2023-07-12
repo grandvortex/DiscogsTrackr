@@ -4,4 +4,8 @@
     <string name="nav_label_favorites">Favorites</string>
     <string name="nav_label_details">Details</string>
     <string name="search_hint">Enter your search</string>
+    <string name="search_result_empty">No results found</string>
+    <string name="loading">Loading…</string>
+    <string name="unknown_artist">Unknown Artist</string>
+    <string name="unknown_title">Unknown Title</string>
 </resources>

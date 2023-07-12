@@ -3,6 +3,7 @@ package com.grandvortex.discogstrackr.presentation.feature.search
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -67,23 +68,19 @@ fun SearchScreen(
         onSearchTriggered()
     }
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.secondary)
+    Column(
+        modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.secondary),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SearchBar(
-            modifier = modifier
-                .fillMaxWidth()
-                .align(Alignment.TopCenter)
-                .onKeyEvent {
-                    if (it.key == Key.Enter) {
-                        onSearchTriggeredFinal()
-                        true
-                    } else {
-                        false
-                    }
-                },
+            modifier = modifier.fillMaxWidth().onKeyEvent {
+                if (it.key == Key.Enter) {
+                    onSearchTriggeredFinal()
+                    true
+                } else {
+                    false
+                }
+            },
             query = queryText,
             onQueryChange = { onSearchQueryChanged(it) },
             onSearch = {
@@ -116,27 +113,44 @@ fun SearchScreen(
                     )
                 }
             }
-        ) {
-            SearchContent(viewState = viewState, onClickItem = onClickItem)
-        }
+        ) {}
+        SearchResultContent(viewState = viewState, onClickItem = onClickItem)
     }
 }
 
 @Composable
-fun SearchContent(
+fun SearchResultContent(
     modifier: Modifier = Modifier,
     viewState: SearchState,
     onClickItem: (Int) -> Unit
 ) {
-    LazyColumn(modifier = modifier, contentPadding = PaddingValues(all = 4.dp)) {
-        viewState.data?.results?.forEach { result ->
-            val id = result.id
-            item(key = id) {
-                SearchResultItem(
-                    type = result.type,
-                    title = result.title,
-                    onClick = { onClickItem(id) }
-                )
+    val list = viewState.data?.results
+    val listEmpty = list?.isEmpty() ?: false
+
+    if (viewState.isLoading) {
+        Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(text = stringResource(id = R.string.loading))
+        }
+    } else if (listEmpty) {
+        Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(text = stringResource(id = R.string.search_result_empty))
+        }
+    } else if (list == null) {
+        Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(text = stringResource(id = R.string.search_hint))
+        }
+    } else {
+        LazyColumn(modifier = modifier, contentPadding = PaddingValues(all = 4.dp)) {
+            list.forEach { result ->
+                val id = result.id
+                item(key = id) {
+                    SearchResultItem(
+                        type = result.type,
+                        info = result.title,
+                        imageUrl = result.coverImage,
+                        onClick = { onClickItem(id) }
+                    )
+                }
             }
         }
     }

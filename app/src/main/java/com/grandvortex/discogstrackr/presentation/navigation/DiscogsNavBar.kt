@@ -9,7 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 
 @Composable
-fun DiscogsNavBar(currentRoute: String, navigateToScreen: (screen: Screen) -> Unit) {
+fun DiscogsNavBar(currentRoute: String, navigateToScreen: (screen: TabScreen) -> Unit) {
     NavigationBar(containerColor = MaterialTheme.colorScheme.primary) {
         bottomNavList.forEach { bottomNavItem ->
             NavigationBarItem(
