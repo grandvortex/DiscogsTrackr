@@ -119,12 +119,20 @@ fun SearchScreen(
 }
 
 @Composable
+fun RecentSearchContent(
+    modifier: Modifier = Modifier,
+    viewState: SearchState,
+    onClickItem: (Int) -> Unit
+) {
+}
+
+@Composable
 fun SearchResultContent(
     modifier: Modifier = Modifier,
     viewState: SearchState,
     onClickItem: (Int) -> Unit
 ) {
-    val list = viewState.data?.results
+    val list = viewState.searchResultData?.results
     val listEmpty = list?.isEmpty() ?: false
 
     if (viewState.isLoading) {

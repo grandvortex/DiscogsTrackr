@@ -86,6 +86,7 @@ dependencies {
     val retrofitVersion = "2.9.0"
     val coroutinesVersion = "1.7.1"
     val moshiVersion = "1.14.0"
+    val roomVersion = "2.5.2"
 
     // Compose
     implementation(composeBOM)
@@ -98,6 +99,16 @@ dependencies {
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.navigation:navigation-compose:2.6.0")
     implementation("androidx.activity:activity-compose:1.7.2")
+
+    // Room Database
+    ksp("androidx.room:room-compiler:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+    implementation("androidx.room:room-runtime:$roomVersion")
+    implementation("androidx.room:room-ktx:$roomVersion")
+    implementation("androidx.room:room-paging:$roomVersion")
+
+    // Room Database Testing
+    testImplementation("androidx.room:room-testing:$roomVersion")
 
     // Lifecycle Scopes and Architectural Components
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
@@ -115,16 +126,19 @@ dependencies {
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.appcompat:appcompat:1.6.1")
 
+    // Date and Time Library
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+
     // OKHTTP
     implementation(okhttpBOM)
     implementation("com.squareup.okhttp3:okhttp")
     implementation("com.squareup.okhttp3:logging-interceptor")
 
     // Retrofit and Moshi
+    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
     implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
     implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
     implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
 
     // Hilt
     kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")

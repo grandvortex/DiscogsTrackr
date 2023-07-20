@@ -2,8 +2,6 @@ package com.grandvortex.discogstrackr.di
 
 import android.util.Log
 import com.grandvortex.discogstrackr.BuildConfig
-import com.grandvortex.discogstrackr.data.remote.repository.SearchRepository
-import com.grandvortex.discogstrackr.data.remote.repository.SearchRepositoryDefault
 import com.grandvortex.discogstrackr.data.remote.retrofit.RemoteService
 import com.grandvortex.discogstrackr.utils.BaseUrl
 import com.grandvortex.discogstrackr.utils.Credentials
@@ -72,9 +70,4 @@ object NetworkModule {
     @Provides
     fun provideRemoteService(retrofit: Retrofit): RemoteService =
         retrofit.create(RemoteService::class.java)
-
-    @Singleton
-    @Provides
-    fun provideSearchRepository(remoteService: RemoteService): SearchRepository =
-        SearchRepositoryDefault(remoteService)
 }
