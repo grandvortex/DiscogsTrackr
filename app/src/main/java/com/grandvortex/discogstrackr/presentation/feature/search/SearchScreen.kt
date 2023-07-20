@@ -39,7 +39,7 @@ fun SearchRoute(
     onClickItem: (Int) -> Unit
 ) {
     val viewState by searchViewModel.viewState.collectAsStateWithLifecycle()
-    val queryText by searchViewModel.queryText
+    val queryText = searchViewModel.queryText
 
     SearchScreen(
         modifier = modifier,

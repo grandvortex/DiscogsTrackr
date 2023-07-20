@@ -19,6 +19,11 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables.useSupportLibrary = true
 
+        // Designate a directory for Room database schema for versioning (useful when updating database version for comparison)
+        ksp {
+            arg("room.schemaLocation", "$projectDir/schemas")
+        }
+
         // Discogs key and secret to use their services
         buildConfigField("String", "KEY", "\"ABvycztVyPKHEkutPDNQ\"")
         buildConfigField("String", "SECRET", "\"xtjhIkDzviXawzrOPTfkxXArxLeLZiso\"")
@@ -76,16 +81,16 @@ android {
 
 dependencies {
     // Bill Of Materials for compose libraries
-    val composeBOM = platform("androidx.compose:compose-bom:2023.05.01")
+    val composeBOM = platform("androidx.compose:compose-bom:2023.06.01")
 
     // Bill of Materials for okhttp
     val okhttpBOM = platform("com.squareup.okhttp3:okhttp-bom:4.10.0")
 
     val lifecycleVersion = "2.6.1"
-    val hiltVersion = "2.46.1"
+    val hiltVersion = "2.47"
     val retrofitVersion = "2.9.0"
-    val coroutinesVersion = "1.7.1"
-    val moshiVersion = "1.14.0"
+    val coroutinesVersion = "1.7.2"
+    val moshiVersion = "1.15.0"
     val roomVersion = "2.5.2"
 
     // Compose
