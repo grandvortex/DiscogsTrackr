@@ -38,7 +38,7 @@ fun SearchRoute(
     searchViewModel: SearchViewModel = hiltViewModel(),
     onClickItem: (Int) -> Unit
 ) {
-    val viewState by searchViewModel.viewState.collectAsStateWithLifecycle()
+    val viewState by searchViewModel.viewStateFlow.collectAsStateWithLifecycle()
     val queryText = searchViewModel.queryText
 
     SearchScreen(
@@ -48,7 +48,8 @@ fun SearchRoute(
         onSearchActiveChanged = searchViewModel::onSearchActiveChanged,
         onSearchTriggered = searchViewModel::onSearchTriggered,
         onSearchQueryChanged = searchViewModel::onSearchQueryChanged,
-        onClickItem = onClickItem
+        onClickItem = onClickItem,
+        onClickRecentQueryItem = searchViewModel::onSearchQueryChanged
     )
 }
 
@@ -56,12 +57,13 @@ fun SearchRoute(
 @Composable
 fun SearchScreen(
     modifier: Modifier = Modifier,
-    viewState: SearchState,
+    viewState: SearchViewState,
     queryText: String = "",
     onSearchActiveChanged: (Boolean) -> Unit,
     onSearchTriggered: () -> Unit,
     onSearchQueryChanged: (String) -> Unit,
-    onClickItem: (Int) -> Unit
+    onClickItem: (Int) -> Unit,
+    onClickRecentQueryItem: (String) -> Unit
 ) {
     val onSearchTriggeredFinal = {
         onSearchActiveChanged(false)
@@ -113,7 +115,13 @@ fun SearchScreen(
                     )
                 }
             }
-        ) {}
+        ) {
+            RecentSearchContent(
+                modifier = modifier,
+                viewState = viewState,
+                onClickRecentQueryItem = onClickRecentQueryItem
+            )
+        }
         SearchResultContent(viewState = viewState, onClickItem = onClickItem)
     }
 }
@@ -121,15 +129,33 @@ fun SearchScreen(
 @Composable
 fun RecentSearchContent(
     modifier: Modifier = Modifier,
-    viewState: SearchState,
-    onClickItem: (Int) -> Unit
+    viewState: SearchViewState,
+    onClickRecentQueryItem: (String) -> Unit
 ) {
+    val recentSearchList = viewState.recentSearchData
+
+    if (recentSearchList.isNullOrEmpty()) {
+        Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            Text(text = stringResource(id = R.string.no_recent_queries))
+        }
+    } else {
+        LazyColumn(modifier = modifier.fillMaxSize(), contentPadding = PaddingValues(all = 4.dp)) {
+            recentSearchList.forEach { recentQuery ->
+                item {
+                    RecentSearchQueryItem(
+                        query = recentQuery.queryText,
+                        onClickItem = { onClickRecentQueryItem(recentQuery.queryText) }
+                    )
+                }
+            }
+        }
+    }
 }
 
 @Composable
 fun SearchResultContent(
     modifier: Modifier = Modifier,
-    viewState: SearchState,
+    viewState: SearchViewState,
     onClickItem: (Int) -> Unit
 ) {
     val list = viewState.searchResultData?.results
@@ -148,7 +174,7 @@ fun SearchResultContent(
             Text(text = stringResource(id = R.string.search_hint))
         }
     } else {
-        LazyColumn(modifier = modifier, contentPadding = PaddingValues(all = 4.dp)) {
+        LazyColumn(modifier = modifier.fillMaxSize(), contentPadding = PaddingValues(all = 4.dp)) {
             list.forEach { result ->
                 val id = result.id
                 item(key = id) {
@@ -169,11 +195,12 @@ fun SearchResultContent(
 fun SearchScreenPreview() {
     DiscogsTrackrTheme {
         SearchScreen(
-            viewState = SearchState(),
+            viewState = SearchViewState(),
             onSearchQueryChanged = {},
             onSearchTriggered = {},
             onSearchActiveChanged = {},
-            onClickItem = {}
+            onClickItem = {},
+            onClickRecentQueryItem = {}
         )
     }
 }

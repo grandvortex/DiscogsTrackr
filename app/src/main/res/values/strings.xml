@@ -5,6 +5,7 @@
     <string name="nav_label_details">Details</string>
     <string name="search_hint">Enter your search</string>
     <string name="search_result_empty">No results found</string>
+    <string name="no_recent_queries">No recent queries</string>
     <string name="loading">Loading…</string>
     <string name="unknown_artist">Unknown Artist</string>
     <string name="unknown_title">Unknown Title</string>

@@ -2,18 +2,12 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ac38eeb4995db4225c856a6794b0627d",
+    "identityHash": "95c4466e40bb211685a0dcabdacea6cc",
     "entities": [
       {
         "tableName": "recentSearchQueries",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `queryText` TEXT NOT NULL, `quriedDate` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`queryText` TEXT NOT NULL, `quriedDate` INTEGER NOT NULL, PRIMARY KEY(`queryText`))",
         "fields": [
-          {
-            "fieldPath": "id",
-            "columnName": "id",
-            "affinity": "INTEGER",
-            "notNull": true
-          },
           {
             "fieldPath": "queryText",
             "columnName": "queryText",
@@ -28,9 +22,9 @@
           }
         ],
         "primaryKey": {
-          "autoGenerate": true,
+          "autoGenerate": false,
           "columnNames": [
-            "id"
+            "queryText"
           ]
         },
         "indices": [],
@@ -40,7 +34,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ac38eeb4995db4225c856a6794b0627d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '95c4466e40bb211685a0dcabdacea6cc')"
     ]
   }
 }

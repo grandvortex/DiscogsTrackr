@@ -7,7 +7,8 @@ import kotlinx.datetime.Instant
 
 @Entity(tableName = "recentSearchQueries")
 data class RecentSearchEntity(
-    @PrimaryKey(autoGenerate = true) val id: Int = 0,
-    @ColumnInfo(name = "queryText") val queryText: String,
+    @PrimaryKey
+    @ColumnInfo(name = "queryText")
+    val queryText: String,
     @ColumnInfo(name = "quriedDate") val queriedDate: Instant
 )

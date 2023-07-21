@@ -1,8 +1,8 @@
 package com.grandvortex.discogstrackr.di
 
-import com.grandvortex.discogstrackr.data.local.dao.RecentSearchDao
-import com.grandvortex.discogstrackr.data.local.repository.RecentSearchRepository
-import com.grandvortex.discogstrackr.data.local.repository.RecentSearchRepositoryDefault
+import com.grandvortex.discogstrackr.data.local.dao.RecentSearchQueryDao
+import com.grandvortex.discogstrackr.data.local.repository.RecentSearchQueryRepository
+import com.grandvortex.discogstrackr.data.local.repository.RecentSearchQueryRepositoryDefault
 import com.grandvortex.discogstrackr.data.remote.repository.SearchRepository
 import com.grandvortex.discogstrackr.data.remote.repository.SearchRepositoryDefault
 import com.grandvortex.discogstrackr.data.remote.retrofit.RemoteService
@@ -24,8 +24,9 @@ object RepositoryModule {
 
     @Singleton
     @Provides
-    fun provideRecentSearchRepository(
-        recentSearchDao: RecentSearchDao,
+    fun provideRecentSearchQueryRepository(
+        recentSearchDao: RecentSearchQueryDao,
         @ApplicationScope appCoroutineScope: CoroutineScope
-    ): RecentSearchRepository = RecentSearchRepositoryDefault(recentSearchDao, appCoroutineScope)
+    ): RecentSearchQueryRepository =
+        RecentSearchQueryRepositoryDefault(recentSearchDao, appCoroutineScope)
 }

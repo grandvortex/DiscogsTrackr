@@ -24,6 +24,10 @@ android {
             arg("room.schemaLocation", "$projectDir/schemas")
         }
 
+        kapt {
+            correctErrorTypes = true
+        }
+
         // Discogs key and secret to use their services
         buildConfigField("String", "KEY", "\"ABvycztVyPKHEkutPDNQ\"")
         buildConfigField("String", "SECRET", "\"xtjhIkDzviXawzrOPTfkxXArxLeLZiso\"")
@@ -107,7 +111,6 @@ dependencies {
 
     // Room Database
     ksp("androidx.room:room-compiler:$roomVersion")
-    annotationProcessor("androidx.room:room-compiler:$roomVersion")
     implementation("androidx.room:room-runtime:$roomVersion")
     implementation("androidx.room:room-ktx:$roomVersion")
     implementation("androidx.room:room-paging:$roomVersion")

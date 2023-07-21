@@ -1,26 +1,26 @@
 package com.grandvortex.discogstrackr.di
 
-import com.grandvortex.discogstrackr.data.local.repository.RecentSearchRepository
+import com.grandvortex.discogstrackr.data.local.repository.RecentSearchQueryRepository
 import com.grandvortex.discogstrackr.data.remote.repository.SearchRepository
-import com.grandvortex.discogstrackr.domain.RecentSearchUseCase
+import com.grandvortex.discogstrackr.domain.RecentSearchQueryUseCase
 import com.grandvortex.discogstrackr.domain.SearchUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
-@InstallIn(SingletonComponent::class)
+@InstallIn(ViewModelComponent::class)
 object UseCaseModule {
 
-    @Singleton
+    @ViewModelScoped
     @Provides
     fun provideSearchUseCase(searchRepository: SearchRepository): SearchUseCase =
         SearchUseCase(searchRepository)
 
-    @Singleton
+    @ViewModelScoped
     @Provides
-    fun provideRecentSearchUseCase(recentSearchRepository: RecentSearchRepository):
-        RecentSearchUseCase = RecentSearchUseCase(recentSearchRepository)
+    fun provideRecentSearchUseCase(recentSearchRepository: RecentSearchQueryRepository):
+        RecentSearchQueryUseCase = RecentSearchQueryUseCase(recentSearchRepository)
 }

@@ -1,12 +1,12 @@
 package com.grandvortex.discogstrackr.domain
 
-import com.grandvortex.discogstrackr.data.local.repository.RecentSearchRepository
+import com.grandvortex.discogstrackr.data.local.repository.RecentSearchQueryRepository
 import com.grandvortex.discogstrackr.data.model.RecentSearch
 import javax.inject.Inject
 import kotlinx.coroutines.flow.Flow
 
-class RecentSearchUseCase @Inject constructor(
-    private val recentSearchRepository: RecentSearchRepository
+class RecentSearchQueryUseCase @Inject constructor(
+    private val recentSearchRepository: RecentSearchQueryRepository
 ) {
 
     fun getAllRecentSearchQueries(): Flow<List<RecentSearch>> {

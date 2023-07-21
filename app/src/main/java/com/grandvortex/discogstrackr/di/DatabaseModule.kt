@@ -3,7 +3,7 @@ package com.grandvortex.discogstrackr.di
 import android.content.Context
 import androidx.room.Room
 import com.grandvortex.discogstrackr.data.local.AppDatabase
-import com.grandvortex.discogstrackr.data.local.dao.RecentSearchDao
+import com.grandvortex.discogstrackr.data.local.dao.RecentSearchQueryDao
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,5 +30,5 @@ object DatabaseModule {
     @Provides
     fun provideRecentSearchDao(
         database: AppDatabase
-    ): RecentSearchDao = database.recentSearchDao()
+    ): RecentSearchQueryDao = database.recentSearchDao()
 }

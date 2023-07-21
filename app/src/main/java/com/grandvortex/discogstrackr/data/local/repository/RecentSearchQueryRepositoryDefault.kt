@@ -1,6 +1,6 @@
 package com.grandvortex.discogstrackr.data.local.repository
 
-import com.grandvortex.discogstrackr.data.local.dao.RecentSearchDao
+import com.grandvortex.discogstrackr.data.local.dao.RecentSearchQueryDao
 import com.grandvortex.discogstrackr.data.local.entity.RecentSearchEntity
 import com.grandvortex.discogstrackr.data.mapper.toRecentSearch
 import com.grandvortex.discogstrackr.data.model.RecentSearch
@@ -12,10 +12,10 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
 
-class RecentSearchRepositoryDefault @Inject constructor(
-    private val recentSearchDao: RecentSearchDao,
+class RecentSearchQueryRepositoryDefault @Inject constructor(
+    private val recentSearchDao: RecentSearchQueryDao,
     @ApplicationScope private val appCoroutineScope: CoroutineScope
-) : RecentSearchRepository {
+) : RecentSearchQueryRepository {
 
     override fun getAllRecentSearchQueries(): Flow<List<RecentSearch>> {
         return recentSearchDao.getAllRecentSearchQueries()
@@ -24,14 +24,16 @@ class RecentSearchRepositoryDefault @Inject constructor(
 
     override suspend fun upsertSearchQuery(query: String) {
         withContext(appCoroutineScope.coroutineContext) {
-            recentSearchDao.upsertSearchQuery(
+            recentSearchDao.upsertRecentSearchQuery(
                 RecentSearchEntity(queryText = query, queriedDate = Clock.System.now())
             )
         }
     }
 
     override suspend fun deleteSearchQuery(query: String) {
-        withContext(appCoroutineScope.coroutineContext) { recentSearchDao.deleteSearchQuery(query) }
+        withContext(appCoroutineScope.coroutineContext) {
+            recentSearchDao.deleteRecentSearchQuery(query)
+        }
     }
 
     override suspend fun clearRecentSearchQueries() {

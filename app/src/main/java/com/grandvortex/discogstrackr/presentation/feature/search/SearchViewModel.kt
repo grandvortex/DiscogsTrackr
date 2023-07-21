@@ -8,14 +8,16 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.grandvortex.discogstrackr.data.Result
-import com.grandvortex.discogstrackr.domain.RecentSearchUseCase
+import com.grandvortex.discogstrackr.domain.RecentSearchQueryUseCase
 import com.grandvortex.discogstrackr.domain.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.filterNot
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -24,12 +26,20 @@ private const val SEARCH_QUERY = "search_query"
 @HiltViewModel
 class SearchViewModel @Inject constructor(
     private val searchUseCase: SearchUseCase,
-    private val recentSearchUseCase: RecentSearchUseCase,
+    private val recentSearchUseCase: RecentSearchQueryUseCase,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
-    private val _viewState: MutableStateFlow<SearchState> = MutableStateFlow(SearchState())
-    val viewState = _viewState.asStateFlow()
+    private val _stateFlow = MutableStateFlow(SearchViewState())
+    private val _recentSearchFlow = recentSearchUseCase.getAllRecentSearchQueries()
+
+    val viewStateFlow = combine(_stateFlow, _recentSearchFlow) { viewState, recentSearches ->
+        viewState.copy(recentSearchData = recentSearches)
+    }.stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(5000),
+        initialValue = SearchViewState()
+    )
 
     var queryText by mutableStateOf("")
         private set
@@ -41,10 +51,6 @@ class SearchViewModel @Inject constructor(
         onSearchTriggered()
     }
 
-    fun onRecentSearchItemClicked() {
-        // TODO
-    }
-
     fun onRecentSearchItemDeleted(query: String) {
         viewModelScope.launch { recentSearchUseCase.deleteSearchQuery(query) }
     }
@@ -54,16 +60,19 @@ class SearchViewModel @Inject constructor(
     }
 
     fun onSearchActiveChanged(active: Boolean) {
-        _viewState.update { state -> state.copy(isSearchActive = active) }
+        _stateFlow.update { state -> state.copy(isSearchActive = active) }
     }
 
     fun onSearchTriggered() {
         if (queryText.isNotEmpty()) {
             viewModelScope.launch {
-                _viewState.update { state -> state.copy(isLoading = true) }
+                _stateFlow.update { state -> state.copy(isLoading = true) }
+
+                recentSearchUseCase.upsertSearchQuery(queryText)
+
                 when (val result = searchUseCase.invoke(queryText)) {
                     is Result.Success -> {
-                        _viewState.update { state ->
+                        _stateFlow.update { state ->
                             state.copy(
                                 searchResultData = result.data,
                                 isLoading = false
@@ -72,7 +81,7 @@ class SearchViewModel @Inject constructor(
                     }
 
                     is Result.Error -> {
-                        _viewState.update { state ->
+                        _stateFlow.update { state ->
                             state.copy(
                                 error = result.e.message ?: "",
                                 isLoading = false
