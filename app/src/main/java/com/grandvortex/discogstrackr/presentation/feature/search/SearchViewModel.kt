@@ -3,7 +3,6 @@ package com.grandvortex.discogstrackr.presentation.feature.search
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -15,8 +14,6 @@ import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.filterNot
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -30,6 +27,9 @@ class SearchViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    var queryText by mutableStateOf("")
+        private set
+
     private val _stateFlow = MutableStateFlow(SearchViewState())
     private val _recentSearchFlow = recentSearchUseCase.getAllRecentSearchQueries()
 
@@ -40,11 +40,6 @@ class SearchViewModel @Inject constructor(
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = SearchViewState()
     )
-
-    var queryText by mutableStateOf("")
-        private set
-
-    private val s = snapshotFlow { queryText }.debounce(200).filterNot { it.isEmpty() }
 
     init {
         queryText = savedStateHandle[SEARCH_QUERY] ?: ""
@@ -68,8 +63,6 @@ class SearchViewModel @Inject constructor(
             viewModelScope.launch {
                 _stateFlow.update { state -> state.copy(isLoading = true) }
 
-                recentSearchUseCase.upsertSearchQuery(queryText)
-
                 when (val result = searchUseCase.invoke(queryText)) {
                     is Result.Success -> {
                         _stateFlow.update { state ->
@@ -89,6 +82,7 @@ class SearchViewModel @Inject constructor(
                         }
                     }
                 }
+                recentSearchUseCase.upsertSearchQuery(queryText)
             }
         }
     }
@@ -96,5 +90,11 @@ class SearchViewModel @Inject constructor(
     fun onSearchQueryChanged(query: String) {
         savedStateHandle[SEARCH_QUERY] = query
         queryText = query
+    }
+
+    fun onRecentSearchQueryClick(query: String) {
+        onSearchQueryChanged(query)
+        onSearchActiveChanged(false)
+        onSearchTriggered()
     }
 }

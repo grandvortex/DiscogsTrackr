@@ -9,6 +9,6 @@ class SearchUseCase @Inject constructor(
     private val searchRepository: SearchRepository
 ) {
     suspend operator fun invoke(query: String): Result<SearchResults> {
-        return searchRepository.search(query)
+        return searchRepository.search(query.trim())
     }
 }

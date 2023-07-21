@@ -14,11 +14,11 @@ class RecentSearchQueryUseCase @Inject constructor(
     }
 
     suspend fun upsertSearchQuery(query: String) {
-        recentSearchRepository.upsertSearchQuery(query)
+        recentSearchRepository.upsertSearchQuery(query.trim())
     }
 
     suspend fun deleteSearchQuery(query: String) {
-        recentSearchRepository.deleteSearchQuery(query)
+        recentSearchRepository.deleteSearchQuery(query.trim())
     }
 
     suspend fun clearRecentSearchQueries() {

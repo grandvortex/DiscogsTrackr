@@ -49,7 +49,8 @@ fun SearchRoute(
         onSearchTriggered = searchViewModel::onSearchTriggered,
         onSearchQueryChanged = searchViewModel::onSearchQueryChanged,
         onClickItem = onClickItem,
-        onClickRecentQueryItem = searchViewModel::onSearchQueryChanged
+        onClickRecentQueryItem = searchViewModel::onRecentSearchQueryClick,
+        onClickDeleteRecentQueryItem = searchViewModel::onRecentSearchItemDeleted
     )
 }
 
@@ -63,7 +64,8 @@ fun SearchScreen(
     onSearchTriggered: () -> Unit,
     onSearchQueryChanged: (String) -> Unit,
     onClickItem: (Int) -> Unit,
-    onClickRecentQueryItem: (String) -> Unit
+    onClickRecentQueryItem: (String) -> Unit,
+    onClickDeleteRecentQueryItem: (String) -> Unit
 ) {
     val onSearchTriggeredFinal = {
         onSearchActiveChanged(false)
@@ -119,7 +121,8 @@ fun SearchScreen(
             RecentSearchContent(
                 modifier = modifier,
                 viewState = viewState,
-                onClickRecentQueryItem = onClickRecentQueryItem
+                onClickRecentQueryItem = onClickRecentQueryItem,
+                onClickDeleteItem = onClickDeleteRecentQueryItem
             )
         }
         SearchResultContent(viewState = viewState, onClickItem = onClickItem)
@@ -130,7 +133,8 @@ fun SearchScreen(
 fun RecentSearchContent(
     modifier: Modifier = Modifier,
     viewState: SearchViewState,
-    onClickRecentQueryItem: (String) -> Unit
+    onClickRecentQueryItem: (String) -> Unit,
+    onClickDeleteItem: (String) -> Unit
 ) {
     val recentSearchList = viewState.recentSearchData
 
@@ -144,7 +148,8 @@ fun RecentSearchContent(
                 item {
                     RecentSearchQueryItem(
                         query = recentQuery.queryText,
-                        onClickItem = { onClickRecentQueryItem(recentQuery.queryText) }
+                        onClickItem = { onClickRecentQueryItem(recentQuery.queryText) },
+                        onClickItemDelete = { onClickDeleteItem(recentQuery.queryText) }
                     )
                 }
             }
@@ -200,7 +205,8 @@ fun SearchScreenPreview() {
             onSearchTriggered = {},
             onSearchActiveChanged = {},
             onClickItem = {},
-            onClickRecentQueryItem = {}
+            onClickRecentQueryItem = {},
+            onClickDeleteRecentQueryItem = {}
         )
     }
 }
