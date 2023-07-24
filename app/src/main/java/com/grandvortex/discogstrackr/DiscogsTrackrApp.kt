@@ -41,7 +41,8 @@ fun DiscogsTrackrApp() {
         ) { paddingValues ->
             DiscogsNavHost(
                 modifier = Modifier.fillMaxSize().padding(paddingValues),
-                navController = navController
+                navController = navController,
+                snackbarHostState = snackbarHostState
             )
         }
     }

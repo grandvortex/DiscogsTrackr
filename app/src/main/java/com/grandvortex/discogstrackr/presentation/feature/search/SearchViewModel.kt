@@ -87,6 +87,14 @@ class SearchViewModel @Inject constructor(
         }
     }
 
+    fun onConsumedError() {
+        _stateFlow.update { state ->
+            state.copy(
+                error = ""
+            )
+        }
+    }
+
     fun onSearchQueryChanged(query: String) {
         savedStateHandle[SEARCH_QUERY] = query
         queryText = query

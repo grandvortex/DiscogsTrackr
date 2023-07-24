@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -19,7 +20,6 @@ import com.grandvortex.discogstrackr.presentation.feature.search.SEARCH_ROUTE
 import com.grandvortex.discogstrackr.presentation.feature.search.navigateToSearchScreen
 import com.grandvortex.discogstrackr.presentation.feature.search.searchScreen
 
-// Screens
 sealed class TabScreen(val route: String, @StringRes val label: Int, val icon: ImageVector) {
     object Search : TabScreen(SEARCH_ROUTE, R.string.nav_label_search, Icons.Filled.Search)
     object Favorites :
@@ -43,13 +43,20 @@ fun navigateToTabScreen(
 }
 
 @Composable
-fun DiscogsNavHost(navController: NavHostController, modifier: Modifier = Modifier) {
+fun DiscogsNavHost(
+    navController: NavHostController,
+    modifier: Modifier = Modifier,
+    snackbarHostState: SnackbarHostState
+) {
     NavHost(
         navController = navController,
         startDestination = SEARCH_ROUTE,
         modifier = modifier
     ) {
-        searchScreen(onClickItem = { id: Int -> navController.navigateToDetailsScreen(id) })
+        searchScreen(
+            onClickItem = { id: Int -> navController.navigateToDetailsScreen(id) },
+            snackbarHostState = snackbarHostState
+        )
         favoritesScreen()
         detailsScreen()
     }

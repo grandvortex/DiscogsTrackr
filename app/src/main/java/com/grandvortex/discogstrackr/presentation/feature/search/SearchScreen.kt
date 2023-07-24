@@ -15,8 +15,10 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
@@ -36,7 +38,9 @@ import com.grandvortex.discogstrackr.utils.DevicePreviews
 fun SearchRoute(
     modifier: Modifier = Modifier,
     searchViewModel: SearchViewModel = hiltViewModel(),
-    onClickItem: (Int) -> Unit
+    onClickItem: (Int) -> Unit,
+    snackbarHostState: SnackbarHostState
+
 ) {
     val viewState by searchViewModel.viewStateFlow.collectAsStateWithLifecycle()
     val queryText = searchViewModel.queryText
@@ -50,7 +54,9 @@ fun SearchRoute(
         onSearchQueryChanged = searchViewModel::onSearchQueryChanged,
         onClickItem = onClickItem,
         onClickRecentQueryItem = searchViewModel::onRecentSearchQueryClick,
-        onClickDeleteRecentQueryItem = searchViewModel::onRecentSearchItemDeleted
+        onClickDeleteRecentQueryItem = searchViewModel::onRecentSearchItemDeleted,
+        onConsumedError = searchViewModel::onConsumedError,
+        snackbarHostState = snackbarHostState
     )
 }
 
@@ -65,11 +71,20 @@ fun SearchScreen(
     onSearchQueryChanged: (String) -> Unit,
     onClickItem: (Int) -> Unit,
     onClickRecentQueryItem: (String) -> Unit,
-    onClickDeleteRecentQueryItem: (String) -> Unit
+    onClickDeleteRecentQueryItem: (String) -> Unit,
+    onConsumedError: () -> Unit,
+    snackbarHostState: SnackbarHostState
 ) {
     val onSearchTriggeredFinal = {
         onSearchActiveChanged(false)
         onSearchTriggered()
+    }
+
+    if (viewState.error.isNotEmpty()) {
+        LaunchedEffect(key1 = snackbarHostState) {
+            snackbarHostState.showSnackbar(message = viewState.error)
+            onConsumedError()
+        }
     }
 
     Column(
@@ -125,7 +140,10 @@ fun SearchScreen(
                 onClickDeleteItem = onClickDeleteRecentQueryItem
             )
         }
-        SearchResultContent(viewState = viewState, onClickItem = onClickItem)
+        SearchResultContent(
+            viewState = viewState,
+            onClickItem = onClickItem
+        )
     }
 }
 
@@ -206,7 +224,9 @@ fun SearchScreenPreview() {
             onSearchActiveChanged = {},
             onClickItem = {},
             onClickRecentQueryItem = {},
-            onClickDeleteRecentQueryItem = {}
+            onClickDeleteRecentQueryItem = {},
+            onConsumedError = {},
+            snackbarHostState = SnackbarHostState()
         )
     }
 }

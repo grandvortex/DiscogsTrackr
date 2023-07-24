@@ -1,5 +1,6 @@
 package com.grandvortex.discogstrackr.presentation.feature.search
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
@@ -7,9 +8,12 @@ import androidx.navigation.compose.composable
 
 const val SEARCH_ROUTE = "search"
 
-fun NavGraphBuilder.searchScreen(onClickItem: (Int) -> Unit) {
+fun NavGraphBuilder.searchScreen(
+    onClickItem: (Int) -> Unit,
+    snackbarHostState: SnackbarHostState
+) {
     composable(route = SEARCH_ROUTE) {
-        SearchRoute(onClickItem = onClickItem)
+        SearchRoute(onClickItem = onClickItem, snackbarHostState = snackbarHostState)
     }
 }
 
