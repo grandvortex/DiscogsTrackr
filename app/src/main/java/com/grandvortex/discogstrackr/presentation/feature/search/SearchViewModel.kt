@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.grandvortex.discogstrackr.data.Result
+import com.grandvortex.discogstrackr.data.remote.RemoteResult
 import com.grandvortex.discogstrackr.domain.RecentSearchQueryUseCase
 import com.grandvortex.discogstrackr.domain.SearchUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -64,7 +64,7 @@ class SearchViewModel @Inject constructor(
                 _stateFlow.update { state -> state.copy(isLoading = true) }
 
                 when (val result = searchUseCase.invoke(queryText)) {
-                    is Result.Success -> {
+                    is RemoteResult.Success -> {
                         _stateFlow.update { state ->
                             state.copy(
                                 searchResultData = result.data,
@@ -73,7 +73,7 @@ class SearchViewModel @Inject constructor(
                         }
                     }
 
-                    is Result.Error -> {
+                    is RemoteResult.Error -> {
                         _stateFlow.update { state ->
                             state.copy(
                                 error = result.e.message ?: "",

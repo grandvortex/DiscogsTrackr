@@ -24,10 +24,9 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.grandvortex.discogstrackr.R
-
-const val TYPE_MASTER = "master"
-const val TYPE_RELEASE = "release"
-const val TYPE_LABEL = "label"
+import com.grandvortex.discogstrackr.data.model.LABEL
+import com.grandvortex.discogstrackr.data.model.MASTER
+import com.grandvortex.discogstrackr.data.model.RELEASE
 
 @Composable
 fun SearchResultItem(
@@ -38,7 +37,7 @@ fun SearchResultItem(
     onClick: () -> Unit
 ) {
     when (type) {
-        TYPE_MASTER, TYPE_RELEASE -> {
+        MASTER, RELEASE -> {
             val splitArtistTitle = info.split("-", limit = 2)
 
             val releaseArtist = splitArtistTitle.getOrElse(0) {
@@ -113,12 +112,12 @@ fun ItemCard(
             )
 
             when (type) {
-                TYPE_MASTER, TYPE_RELEASE -> {
+                MASTER, RELEASE -> {
                     ItemText(modifier = modifier, text = title, isBold = true)
                     ItemText(modifier = modifier, text = artist)
                 }
 
-                TYPE_LABEL -> {
+                LABEL -> {
                     ItemText(modifier = modifier, text = title, isBold = true)
                 }
 

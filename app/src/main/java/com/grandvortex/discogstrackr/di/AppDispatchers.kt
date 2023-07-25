@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.data
+package com.grandvortex.discogstrackr.di
 
 import javax.inject.Qualifier
 

@@ -54,7 +54,12 @@ fun DiscogsNavHost(
         modifier = modifier
     ) {
         searchScreen(
-            onClickItem = { id: Int -> navController.navigateToDetailsScreen(id) },
+            onClickItem = { type: String, id: Int ->
+                navController.navigateToDetailsScreen(
+                    type,
+                    id
+                )
+            },
             snackbarHostState = snackbarHostState
         )
         favoritesScreen()

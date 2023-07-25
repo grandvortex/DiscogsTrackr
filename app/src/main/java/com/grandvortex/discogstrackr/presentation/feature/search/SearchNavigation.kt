@@ -9,7 +9,7 @@ import androidx.navigation.compose.composable
 const val SEARCH_ROUTE = "search"
 
 fun NavGraphBuilder.searchScreen(
-    onClickItem: (Int) -> Unit,
+    onClickItem: (String, Int) -> Unit,
     snackbarHostState: SnackbarHostState
 ) {
     composable(route = SEARCH_ROUTE) {

@@ -38,9 +38,8 @@ import com.grandvortex.discogstrackr.utils.DevicePreviews
 fun SearchRoute(
     modifier: Modifier = Modifier,
     searchViewModel: SearchViewModel = hiltViewModel(),
-    onClickItem: (Int) -> Unit,
-    snackbarHostState: SnackbarHostState
-
+    snackbarHostState: SnackbarHostState,
+    onClickItem: (String, Int) -> Unit
 ) {
     val viewState by searchViewModel.viewStateFlow.collectAsStateWithLifecycle()
     val queryText = searchViewModel.queryText
@@ -69,7 +68,7 @@ fun SearchScreen(
     onSearchActiveChanged: (Boolean) -> Unit,
     onSearchTriggered: () -> Unit,
     onSearchQueryChanged: (String) -> Unit,
-    onClickItem: (Int) -> Unit,
+    onClickItem: (String, Int) -> Unit,
     onClickRecentQueryItem: (String) -> Unit,
     onClickDeleteRecentQueryItem: (String) -> Unit,
     onConsumedError: () -> Unit,
@@ -179,7 +178,7 @@ fun RecentSearchContent(
 fun SearchResultContent(
     modifier: Modifier = Modifier,
     viewState: SearchViewState,
-    onClickItem: (Int) -> Unit
+    onClickItem: (String, Int) -> Unit
 ) {
     val list = viewState.searchResultData?.results
     val listEmpty = list?.isEmpty() ?: false
@@ -200,12 +199,14 @@ fun SearchResultContent(
         LazyColumn(modifier = modifier.fillMaxSize(), contentPadding = PaddingValues(all = 4.dp)) {
             list.forEach { result ->
                 val id = result.id
+                val type = result.type
+
                 item(key = id) {
                     SearchResultItem(
                         type = result.type,
                         info = result.title,
                         imageUrl = result.coverImage,
-                        onClick = { onClickItem(id) }
+                        onClick = { onClickItem(type, id) }
                     )
                 }
             }
@@ -222,7 +223,7 @@ fun SearchScreenPreview() {
             onSearchQueryChanged = {},
             onSearchTriggered = {},
             onSearchActiveChanged = {},
-            onClickItem = {},
+            onClickItem = { _, _ -> },
             onClickRecentQueryItem = {},
             onClickDeleteRecentQueryItem = {},
             onConsumedError = {},
