@@ -1,9 +1,9 @@
 plugins {
-    id("com.android.application")
-    id("org.jetbrains.kotlin.android")
-    id("com.google.devtools.ksp")
-    id("org.jetbrains.kotlin.kapt")
-    id("com.google.dagger.hilt.android")
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.ksp)
+    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.hilt)
 }
 
 android {
@@ -75,7 +75,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.7"
+        kotlinCompilerExtensionVersion = libs.versions.androidComposeCompiler.get()
     }
     packaging {
         resources.excludes += "/META-INF/AL2.0"
@@ -85,17 +85,10 @@ android {
 
 dependencies {
     // Bill Of Materials for compose libraries
-    val composeBOM = platform("androidx.compose:compose-bom:2023.06.01")
+    val composeBOM = platform(libs.compose.bom)
 
     // Bill of Materials for okhttp
-    val okhttpBOM = platform("com.squareup.okhttp3:okhttp-bom:4.10.0")
-
-    val lifecycleVersion = "2.6.1"
-    val hiltVersion = "2.47"
-    val retrofitVersion = "2.9.0"
-    val coroutinesVersion = "1.7.2"
-    val moshiVersion = "1.15.0"
-    val roomVersion = "2.5.2"
+    val okhttpBOM = platform(libs.okhttp.bom)
 
     // Compose
     implementation(composeBOM)
@@ -106,52 +99,8 @@ dependencies {
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.navigation:navigation-compose:2.6.0")
-    implementation("androidx.activity:activity-compose:1.7.2")
-
-    // Room Database
-    ksp("androidx.room:room-compiler:$roomVersion")
-    implementation("androidx.room:room-runtime:$roomVersion")
-    implementation("androidx.room:room-ktx:$roomVersion")
-    implementation("androidx.room:room-paging:$roomVersion")
-
-    // Room Database Testing
-    testImplementation("androidx.room:room-testing:$roomVersion")
-
-    // Lifecycle Scopes and Architectural Components
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:$lifecycleVersion")
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycleVersion")
-
-    // Coil Image Library
-    implementation("io.coil-kt:coil-compose:2.4.0")
-
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutinesVersion")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion")
-
-    // Android
-    implementation("androidx.core:core-ktx:1.10.1")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-
-    // Date and Time Library
-    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-
-    // OKHTTP
-    implementation(okhttpBOM)
-    implementation("com.squareup.okhttp3:okhttp")
-    implementation("com.squareup.okhttp3:logging-interceptor")
-
-    // Retrofit and Moshi
-    ksp("com.squareup.moshi:moshi-kotlin-codegen:$moshiVersion")
-    implementation("com.squareup.retrofit2:retrofit:$retrofitVersion")
-    implementation("com.squareup.retrofit2:converter-moshi:$retrofitVersion")
-    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
-
-    // Hilt
-    kapt("com.google.dagger:hilt-android-compiler:$hiltVersion")
-    implementation("com.google.dagger:hilt-android:$hiltVersion")
-    implementation("androidx.hilt:hilt-navigation-compose:1.0.0")
+    implementation(libs.navigation.compose)
+    implementation(libs.activity.compose)
 
     // Test Compose
     androidTestImplementation(composeBOM)
@@ -159,16 +108,62 @@ dependencies {
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 
-    // Test Android
-    testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.1.5")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
+    // Room Database
+    ksp(libs.room.compiler)
+    implementation(libs.room.runtime)
+    implementation(libs.room.ktx)
+    implementation(libs.room.paging)
+
+    // Room Database Testing
+    testImplementation(libs.room.testing)
+
+    // Lifecycle Scopes and Architectural Components
+    implementation(libs.lifecycle.viewmodel.compose)
+    implementation(libs.lifecycle.runtime.compose)
+    implementation(libs.lifecycle.runtime.ktx)
+
+    // Coil Image Library
+    implementation(libs.coil.compose)
+
+    // Coroutines
+    implementation(libs.coroutines.kotlinx.core)
+    implementation(libs.coroutines.kotlinx.android)
+
+    // Android
+    implementation(libs.android.core.ktx)
+    implementation(libs.android.appcompat)
+
+    // Kotlin Date and Time
+    implementation(libs.kotlin.datetime)
+
+    // OKHTTP
+    implementation(okhttpBOM)
+    implementation("com.squareup.okhttp3:okhttp")
+    implementation("com.squareup.okhttp3:logging-interceptor")
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.moshi)
+
+    // Moshi
+    ksp(libs.moshi.kotlin.codegen)
+    implementation(libs.moshi.kotlin)
+
+    // Hilt
+    kapt(libs.hilt.android.compiler)
+    implementation(libs.hilt.android)
+    implementation(libs.hilt.navigation.compose)
 
     // Hilt for instrumentation tests
-    androidTestImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
-    kaptAndroidTest("com.google.dagger:hilt-compiler:$hiltVersion")
+    androidTestImplementation(libs.hilt.android.testing)
+    kaptAndroidTest(libs.hilt.compiler)
 
     // Hilt for local unit tests
-    testImplementation("com.google.dagger:hilt-android-testing:$hiltVersion")
-    kaptTest("com.google.dagger:hilt-compiler:$hiltVersion")
+    testImplementation(libs.hilt.android.testing)
+    kaptTest(libs.hilt.compiler)
+
+    // Test Android
+    testImplementation(libs.junit)
+    androidTestImplementation(libs.android.test.junit)
+    androidTestImplementation(libs.android.test.espresso.core)
 }

@@ -1,0 +1,151 @@
+[versions]
+# Compose
+androidComposeCompiler = "1.5.1"
+
+# Kotlin
+kotlinGradlePlugin = "1.9.0"
+
+# Compose BOM
+composeBOM = "2023.06.01"
+
+# Navigation Compose
+navigationCompose = "2.6.0"
+
+# Activity Compose
+activityCompose = "1.7.2"
+
+# Lifecycle
+lifecycle = "2.6.1"
+
+# OKHTTP BOM
+okhttpBOM = "4.10.0"
+
+# Retrofit
+retrofit = "2.9.0"
+
+# Moshi
+moshi = "1.15.0"
+
+# Room
+room = "2.5.2"
+
+# Hilt
+hiltGradlePlugin = "2.47"
+hiltNavigationCompose = "1.0.0"
+
+# Coil Image Library
+coil = "2.4.0"
+
+# Coroutinese
+coroutines = "1.7.3"
+
+# Android Gradle Plugin
+androidGradlePlugin = "8.1.0"
+
+# Android Core KTX
+androidCoreKtx = "1.10.1"
+
+# Appcompat
+appcompat = "1.6.1"
+
+# Kotlin Date and Time
+kotlinDateTime = "0.4.0"
+
+# Kotlin Symbol Processing - KSP
+kotlinSymbolProcessing = "1.9.0-1.0.11"
+
+# JUnit
+junit = "4.13.2"
+
+# Android Test JUnit
+androidTestJunit = "1.1.5"
+
+# Android Test Espresso
+androidTestEspresso = "3.5.1"
+
+# --------------------------------------------------------------------------------------------------------------------
+
+
+[libraries]
+# Bill Of Materials for compose
+compose_bom = { module = "androidx.compose:compose-bom", version.ref = "composeBOM" }
+
+# Bill of Materials for okhttp
+okhttp_bom = { module = "com.squareup.okhttp3:okhttp-bom", version.ref = "okhttpBOM" }
+
+# Android Core KTX
+android_core_ktx = { module = "androidx.core:core-ktx", version.ref = "androidCoreKtx" }
+
+# Kotlin Date and Time
+kotlin_datetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinDateTime" }
+
+# Appcompat
+android_appcompat = { module = "androidx.appcompat:appcompat", version.ref = "appcompat" }
+
+# Retrofit
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
+retrofit_converter_moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
+
+# Moshi
+moshi_kotlin_codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
+moshi_kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
+
+# Lifecycle Scopes and Architectural Components
+lifecycle_viewmodel_compose = { module = "androidx.lifecycle:lifecycle-viewmodel-compose", version.ref = "lifecycle" }
+lifecycle_runtime_compose = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle" }
+lifecycle_runtime_ktx = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
+
+# Hilt
+hilt_android_compiler = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hiltGradlePlugin" }
+hilt_android = { module = "com.google.dagger:hilt-android", version.ref = "hiltGradlePlugin" }
+hilt_navigation_compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigationCompose" }
+hilt_android_testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltGradlePlugin" }
+hilt_compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hiltGradlePlugin" }
+
+# Room
+room_compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
+room_runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
+room_ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room_paging = { module = "androidx.room:room-paging", version.ref = "room" }
+room_testing = { module = "androidx.room:room-testing", version.ref = "room" }
+
+# Coil Image Library
+coil_compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
+
+# Coroutines
+coroutines_kotlinx_core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+coroutines_kotlinx_android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+
+# Navigation Compose
+navigation_compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
+
+# Activity Compose
+activity_compose = { module = "androidx.activity:activity-compose", version.ref = "activityCompose" }
+
+# JUnit
+junit = { module = "junit:junit", version.ref = "junit" }
+
+# Android Test JUnit
+android_test_junit = { module = "androidx.test.ext:junit", version.ref = "androidTestJunit" }
+
+# Android Test Espresso
+android_test_espresso_core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidTestEspresso" }
+# --------------------------------------------------------------------------------------------------------------------
+
+
+[plugins]
+
+# Hilt
+hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltGradlePlugin" }
+
+# Gradle
+android_application = { id = "com.android.application", version.ref = "androidGradlePlugin" }
+android_library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
+
+# Kotlin
+kotlin_android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinGradlePlugin" }
+kotlin_kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinGradlePlugin" }
+
+# Kotlin Symbol Processing - KSP
+kotlin_ksp = { id = "com.google.devtools.ksp", version.ref = "kotlinSymbolProcessing" }
+# --------------------------------------------------------------------------------------------------------------------
