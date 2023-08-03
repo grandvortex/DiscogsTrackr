@@ -7,6 +7,7 @@ import com.grandvortex.discogstrackr.data.model.SearchResult
 import com.grandvortex.discogstrackr.data.model.SearchResults
 import com.grandvortex.discogstrackr.data.model.Urls
 import com.grandvortex.discogstrackr.data.remote.dto.SearchResultsDTO
+import com.grandvortex.discogstrackr.data.toResourceType
 
 fun SearchResultsDTO.toSearchResults(): SearchResults {
     val remoteUrls = pagination?.urls
@@ -60,7 +61,7 @@ fun SearchResultsDTO.toSearchResults(): SearchResults {
             style = remoteResult.style ?: emptyList(),
             thumb = remoteResult.thumb ?: "",
             title = remoteResult.title ?: "",
-            type = remoteResult.type ?: "",
+            type = toResourceType(remoteResult.type),
             uri = remoteResult.uri ?: "",
             year = remoteResult.year ?: ""
         )

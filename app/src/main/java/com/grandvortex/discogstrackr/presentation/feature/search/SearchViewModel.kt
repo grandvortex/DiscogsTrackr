@@ -87,7 +87,7 @@ class SearchViewModel @Inject constructor(
         }
     }
 
-    fun onConsumedError() {
+    fun onConsumeError() {
         _stateFlow.update { state ->
             state.copy(
                 error = ""

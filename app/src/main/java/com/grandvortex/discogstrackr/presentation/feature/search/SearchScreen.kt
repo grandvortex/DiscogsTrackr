@@ -11,6 +11,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.grandvortex.discogstrackr.R
+import com.grandvortex.discogstrackr.data.ResourceType
 import com.grandvortex.discogstrackr.theme.DiscogsTrackrTheme
 import com.grandvortex.discogstrackr.utils.DevicePreviews
 
@@ -39,9 +41,9 @@ fun SearchRoute(
     modifier: Modifier = Modifier,
     searchViewModel: SearchViewModel = hiltViewModel(),
     snackbarHostState: SnackbarHostState,
-    onClickItem: (String, Int) -> Unit
+    onClickItem: (ResourceType, Int) -> Unit
 ) {
-    val viewState by searchViewModel.viewStateFlow.collectAsStateWithLifecycle()
+    val viewState by searchViewModel.viewStateFlow.collectAsStateWithLifecycle(SearchViewState())
     val queryText = searchViewModel.queryText
 
     SearchScreen(
@@ -54,7 +56,7 @@ fun SearchRoute(
         onClickItem = onClickItem,
         onClickRecentQueryItem = searchViewModel::onRecentSearchQueryClick,
         onClickDeleteRecentQueryItem = searchViewModel::onRecentSearchItemDeleted,
-        onConsumedError = searchViewModel::onConsumedError,
+        onConsumeError = searchViewModel::onConsumeError,
         snackbarHostState = snackbarHostState
     )
 }
@@ -68,24 +70,27 @@ fun SearchScreen(
     onSearchActiveChanged: (Boolean) -> Unit,
     onSearchTriggered: () -> Unit,
     onSearchQueryChanged: (String) -> Unit,
-    onClickItem: (String, Int) -> Unit,
+    onClickItem: (ResourceType, Int) -> Unit,
     onClickRecentQueryItem: (String) -> Unit,
     onClickDeleteRecentQueryItem: (String) -> Unit,
-    onConsumedError: () -> Unit,
+    onConsumeError: () -> Unit,
     snackbarHostState: SnackbarHostState
 ) {
+    // Triggers search and updates searchbars' active state
     val onSearchTriggeredFinal = {
         onSearchActiveChanged(false)
         onSearchTriggered()
     }
 
+    // Display errors
     if (viewState.error.isNotEmpty()) {
         LaunchedEffect(key1 = snackbarHostState) {
             snackbarHostState.showSnackbar(message = viewState.error)
-            onConsumedError()
+            onConsumeError()
         }
     }
 
+    // Display main content
     Column(
         modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.secondary),
         horizontalAlignment = Alignment.CenterHorizontally
@@ -132,6 +137,7 @@ fun SearchScreen(
                 }
             }
         ) {
+            // Display recently searched queries
             RecentSearchContent(
                 modifier = modifier,
                 viewState = viewState,
@@ -139,6 +145,7 @@ fun SearchScreen(
                 onClickDeleteItem = onClickDeleteRecentQueryItem
             )
         }
+        // Display searched content
         SearchResultContent(
             viewState = viewState,
             onClickItem = onClickItem
@@ -178,14 +185,14 @@ fun RecentSearchContent(
 fun SearchResultContent(
     modifier: Modifier = Modifier,
     viewState: SearchViewState,
-    onClickItem: (String, Int) -> Unit
+    onClickItem: (ResourceType, Int) -> Unit
 ) {
     val list = viewState.searchResultData?.results
     val listEmpty = list?.isEmpty() ?: false
 
     if (viewState.isLoading) {
         Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-            Text(text = stringResource(id = R.string.loading))
+            CircularProgressIndicator()
         }
     } else if (listEmpty) {
         Box(modifier = modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
@@ -226,7 +233,7 @@ fun SearchScreenPreview() {
             onClickItem = { _, _ -> },
             onClickRecentQueryItem = {},
             onClickDeleteRecentQueryItem = {},
-            onConsumedError = {},
+            onConsumeError = {},
             snackbarHostState = SnackbarHostState()
         )
     }

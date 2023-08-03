@@ -1,9 +1,12 @@
 [versions]
 # Compose
-androidComposeCompiler = "1.5.1"
+compose = "1.5.1"
 
 # Kotlin
-kotlinGradlePlugin = "1.9.0"
+kotlin = "1.9.0"
+
+# Android Gradle Plugin
+androidGradlePlugin = "8.1.0"
 
 # Compose BOM
 composeBOM = "2023.06.01"
@@ -33,14 +36,11 @@ room = "2.5.2"
 hiltGradlePlugin = "2.47"
 hiltNavigationCompose = "1.0.0"
 
-# Coil Image Library
+# Coil
 coil = "2.4.0"
 
 # Coroutinese
 coroutines = "1.7.3"
-
-# Android Gradle Plugin
-androidGradlePlugin = "8.1.0"
 
 # Android Core KTX
 androidCoreKtx = "1.10.1"
@@ -60,8 +60,8 @@ junit = "4.13.2"
 # Android Test JUnit
 androidTestJunit = "1.1.5"
 
-# Android Test Espresso
-androidTestEspresso = "3.5.1"
+# Espresso
+espresso = "3.5.1"
 
 # --------------------------------------------------------------------------------------------------------------------
 
@@ -109,7 +109,7 @@ room_ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room_paging = { module = "androidx.room:room-paging", version.ref = "room" }
 room_testing = { module = "androidx.room:room-testing", version.ref = "room" }
 
-# Coil Image Library
+# Coil
 coil_compose = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 
 # Coroutines
@@ -129,12 +129,11 @@ junit = { module = "junit:junit", version.ref = "junit" }
 android_test_junit = { module = "androidx.test.ext:junit", version.ref = "androidTestJunit" }
 
 # Android Test Espresso
-android_test_espresso_core = { module = "androidx.test.espresso:espresso-core", version.ref = "androidTestEspresso" }
+android_test_espresso_core = { module = "androidx.test.espresso:espresso-core", version.ref = "espresso" }
 # --------------------------------------------------------------------------------------------------------------------
 
 
 [plugins]
-
 # Hilt
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hiltGradlePlugin" }
 
@@ -143,8 +142,8 @@ android_application = { id = "com.android.application", version.ref = "androidGr
 android_library = { id = "com.android.library", version.ref = "androidGradlePlugin" }
 
 # Kotlin
-kotlin_android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlinGradlePlugin" }
-kotlin_kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlinGradlePlugin" }
+kotlin_android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+kotlin_kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 
 # Kotlin Symbol Processing - KSP
 kotlin_ksp = { id = "com.google.devtools.ksp", version.ref = "kotlinSymbolProcessing" }

@@ -24,20 +24,18 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.grandvortex.discogstrackr.R
-import com.grandvortex.discogstrackr.data.model.LABEL
-import com.grandvortex.discogstrackr.data.model.MASTER
-import com.grandvortex.discogstrackr.data.model.RELEASE
+import com.grandvortex.discogstrackr.data.ResourceType
 
 @Composable
 fun SearchResultItem(
     modifier: Modifier = Modifier,
-    type: String,
+    type: ResourceType,
     info: String,
     imageUrl: String,
     onClick: () -> Unit
 ) {
     when (type) {
-        MASTER, RELEASE -> {
+        ResourceType.MASTER, ResourceType.RELEASE -> {
             val splitArtistTitle = info.split("-", limit = 2)
 
             val releaseArtist = splitArtistTitle.getOrElse(0) {
@@ -86,7 +84,7 @@ fun ItemText(modifier: Modifier = Modifier, text: String, isBold: Boolean = fals
 @Composable
 fun ItemCard(
     modifier: Modifier = Modifier,
-    type: String,
+    type: ResourceType,
     title: String,
     artist: String,
     imageUrl: String,
@@ -112,12 +110,12 @@ fun ItemCard(
             )
 
             when (type) {
-                MASTER, RELEASE -> {
+                ResourceType.MASTER, ResourceType.RELEASE -> {
                     ItemText(modifier = modifier, text = title, isBold = true)
                     ItemText(modifier = modifier, text = artist)
                 }
 
-                LABEL -> {
+                ResourceType.LABEL -> {
                     ItemText(modifier = modifier, text = title, isBold = true)
                 }
 
@@ -136,7 +134,7 @@ fun ItemCard(
 )
 fun PreviewSearchResultItem() {
     SearchResultItem(
-        type = "release",
+        type = ResourceType.RELEASE,
         imageUrl = "",
         info = "Matizz / Electrosoul System - Through My Eyes (Future Engineers Re-Set) / Aura",
         onClick = {}

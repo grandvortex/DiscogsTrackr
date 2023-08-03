@@ -28,7 +28,7 @@ android {
             correctErrorTypes = true
         }
 
-        // Discogs key and secret to use their services
+        // Discogs key and secret to use the service
         buildConfigField("String", "KEY", "\"ABvycztVyPKHEkutPDNQ\"")
         buildConfigField("String", "SECRET", "\"xtjhIkDzviXawzrOPTfkxXArxLeLZiso\"")
     }
@@ -75,7 +75,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = libs.versions.androidComposeCompiler.get()
+        kotlinCompilerExtensionVersion = libs.versions.compose.get()
     }
     packaging {
         resources.excludes += "/META-INF/AL2.0"
@@ -84,7 +84,7 @@ android {
 }
 
 dependencies {
-    // Bill Of Materials for compose libraries
+    // Bill Of Materials for compose
     val composeBOM = platform(libs.compose.bom)
 
     // Bill of Materials for okhttp
@@ -94,6 +94,7 @@ dependencies {
     implementation(composeBOM)
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.material3:material3-window-size-class")
     implementation("androidx.compose.runtime:runtime")
     implementation("androidx.compose.animation:animation")
     implementation("androidx.compose.ui:ui")
@@ -102,19 +103,19 @@ dependencies {
     implementation(libs.navigation.compose)
     implementation(libs.activity.compose)
 
-    // Test Compose
+    // Compose Testing
     androidTestImplementation(composeBOM)
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 
-    // Room Database
+    // Room
     ksp(libs.room.compiler)
     implementation(libs.room.runtime)
     implementation(libs.room.ktx)
     implementation(libs.room.paging)
 
-    // Room Database Testing
+    // Room Testing
     testImplementation(libs.room.testing)
 
     // Lifecycle Scopes and Architectural Components
@@ -122,7 +123,7 @@ dependencies {
     implementation(libs.lifecycle.runtime.compose)
     implementation(libs.lifecycle.runtime.ktx)
 
-    // Coil Image Library
+    // Coil
     implementation(libs.coil.compose)
 
     // Coroutines
@@ -162,7 +163,7 @@ dependencies {
     testImplementation(libs.hilt.android.testing)
     kaptTest(libs.hilt.compiler)
 
-    // Test Android
+    // Android Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.android.test.junit)
     androidTestImplementation(libs.android.test.espresso.core)

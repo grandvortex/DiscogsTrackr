@@ -1,8 +1,10 @@
 package com.grandvortex.discogstrackr.di
 
 import com.grandvortex.discogstrackr.data.local.repository.RecentSearchQueryRepository
+import com.grandvortex.discogstrackr.data.remote.repository.ResourceRepository
 import com.grandvortex.discogstrackr.data.remote.repository.SearchRepository
 import com.grandvortex.discogstrackr.domain.RecentSearchQueryUseCase
+import com.grandvortex.discogstrackr.domain.ResourceUseCase
 import com.grandvortex.discogstrackr.domain.SearchUseCase
 import dagger.Module
 import dagger.Provides
@@ -23,4 +25,9 @@ object UseCaseModule {
     @Provides
     fun provideRecentSearchUseCase(recentSearchRepository: RecentSearchQueryRepository):
         RecentSearchQueryUseCase = RecentSearchQueryUseCase(recentSearchRepository)
+
+    @ViewModelScoped
+    @Provides
+    fun provideArtistUseCase(resourceRepository: ResourceRepository):
+        ResourceUseCase = ResourceUseCase(resourceRepository)
 }

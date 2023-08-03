@@ -1,5 +1,7 @@
 package com.grandvortex.discogstrackr.data.model
 
+import com.grandvortex.discogstrackr.data.ResourceType
+
 data class SearchResults(
     val pagination: Pagination,
     val results: List<SearchResult>
@@ -50,7 +52,7 @@ data class SearchResult(
     val style: List<String>,
     val thumb: String,
     val title: String,
-    val type: String,
+    val type: ResourceType,
     val uri: String,
     val year: String
 )

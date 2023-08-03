@@ -3,6 +3,8 @@ package com.grandvortex.discogstrackr.di
 import com.grandvortex.discogstrackr.data.local.dao.RecentSearchQueryDao
 import com.grandvortex.discogstrackr.data.local.repository.RecentSearchQueryRepository
 import com.grandvortex.discogstrackr.data.local.repository.RecentSearchQueryRepositoryDefault
+import com.grandvortex.discogstrackr.data.remote.repository.ResourceRepository
+import com.grandvortex.discogstrackr.data.remote.repository.ResourceRepositoryDefault
 import com.grandvortex.discogstrackr.data.remote.repository.SearchRepository
 import com.grandvortex.discogstrackr.data.remote.repository.SearchRepositoryDefault
 import com.grandvortex.discogstrackr.data.remote.retrofit.RemoteService
@@ -29,4 +31,9 @@ object RepositoryModule {
         @ApplicationScope appCoroutineScope: CoroutineScope
     ): RecentSearchQueryRepository =
         RecentSearchQueryRepositoryDefault(recentSearchDao, appCoroutineScope)
+
+    @Singleton
+    @Provides
+    fun provideArtistRepository(remoteService: RemoteService): ResourceRepository =
+        ResourceRepositoryDefault(remoteService)
 }
