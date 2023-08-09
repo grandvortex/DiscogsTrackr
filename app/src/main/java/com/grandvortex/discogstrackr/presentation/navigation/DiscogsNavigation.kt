@@ -12,8 +12,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.grandvortex.discogstrackr.R
 import com.grandvortex.discogstrackr.data.ResourceType
-import com.grandvortex.discogstrackr.presentation.feature.details.detailsScreen
-import com.grandvortex.discogstrackr.presentation.feature.details.navigateToDetailsScreen
+import com.grandvortex.discogstrackr.presentation.feature.artist.artistScreen
+import com.grandvortex.discogstrackr.presentation.feature.artist.navigateToArtistScreen
 import com.grandvortex.discogstrackr.presentation.feature.favorites.FAVORITES_ROUTE
 import com.grandvortex.discogstrackr.presentation.feature.favorites.favoritesScreen
 import com.grandvortex.discogstrackr.presentation.feature.favorites.navigateToFavoritesScreen
@@ -56,14 +56,20 @@ fun DiscogsNavHost(
     ) {
         searchScreen(
             onClickItem = { type: ResourceType, id: Int ->
-                navController.navigateToDetailsScreen(
-                    type,
-                    id
-                )
+                when (type) {
+                    ResourceType.ARTIST -> {
+                        navController.navigateToArtistScreen(id)
+                    }
+
+                    ResourceType.LABEL -> {}
+                    ResourceType.RELEASE -> {}
+                    ResourceType.MASTER -> {}
+                    ResourceType.UNKNOWN -> {}
+                }
             },
             snackbarHostState = snackbarHostState
         )
-        detailsScreen(modifier = modifier, snackbarHostState = snackbarHostState)
+        artistScreen(modifier = modifier, snackbarHostState = snackbarHostState)
         favoritesScreen()
     }
 }

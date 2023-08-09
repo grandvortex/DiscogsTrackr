@@ -1,11 +1,10 @@
-package com.grandvortex.discogstrackr.presentation.feature.details
+package com.grandvortex.discogstrackr.presentation.feature.artist
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.grandvortex.discogstrackr.data.ResourceType
+import com.grandvortex.discogstrackr.data.model.Artist
 import com.grandvortex.discogstrackr.data.remote.RemoteResult
-import com.grandvortex.discogstrackr.data.toResourceType
 import com.grandvortex.discogstrackr.domain.ResourceUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -15,46 +14,25 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 @HiltViewModel
-class DetailsViewModel @Inject constructor(
+class ArtistViewModel @Inject constructor(
     resourceUseCase: ResourceUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
+    // Navigation arguments from SearchScreen
     private val id = savedStateHandle.get<Int>(ID_PARAM) ?: -1
-    private val type = toResourceType(savedStateHandle.get<String>(TYPE_PARAM))
 
-    private val _viewStateFlow = MutableStateFlow(DetailsViewState(resourceType = type))
+    private val _viewStateFlow = MutableStateFlow(ArtistViewState())
     val viewStateFlow = _viewStateFlow.asStateFlow()
 
     init {
         viewModelScope.launch {
             _viewStateFlow.update { state -> state.copy(isLoading = true) }
-
-            val result: RemoteResult<Any> = when (type) {
-                ResourceType.ARTIST -> {
-                    resourceUseCase.getArtist(id)
-                }
-
-                ResourceType.LABEL -> {
-                    resourceUseCase.getLabel(id)
-                }
-
-                ResourceType.MASTER -> {
-                    resourceUseCase.getArtist(id)
-                }
-
-                ResourceType.RELEASE -> {
-                    resourceUseCase.getArtist(id)
-                }
-
-                ResourceType.UNKNOWN -> {
-                    resourceUseCase.getArtist(id)
-                }
-            }
+            updateState(resourceUseCase.getArtist(id))
         }
     }
 
-    fun updateState(result: RemoteResult<Any>) {
+    private fun updateState(result: RemoteResult<Artist>) {
         when (result) {
             is RemoteResult.Success -> {
                 _viewStateFlow.update { state ->
