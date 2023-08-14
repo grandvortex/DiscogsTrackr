@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.grandvortex.discogstrackr.data.model.Artist
 import com.grandvortex.discogstrackr.data.remote.RemoteResult
-import com.grandvortex.discogstrackr.domain.ResourceUseCase
+import com.grandvortex.discogstrackr.domain.ArtistUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,12 +15,12 @@ import kotlinx.coroutines.launch
 
 @HiltViewModel
 class ArtistViewModel @Inject constructor(
-    resourceUseCase: ResourceUseCase,
+    artistUseCase: ArtistUseCase,
     savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     // Navigation arguments from SearchScreen
-    private val id = savedStateHandle.get<Int>(ID_PARAM) ?: -1
+    private val id = savedStateHandle.get<Int>(ID_PARAM) ?: -1 // Artist id
 
     private val _viewStateFlow = MutableStateFlow(ArtistViewState())
     val viewStateFlow = _viewStateFlow.asStateFlow()
@@ -28,7 +28,7 @@ class ArtistViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _viewStateFlow.update { state -> state.copy(isLoading = true) }
-            updateState(resourceUseCase.getArtist(id))
+            updateState(artistUseCase.getArtist(id))
         }
     }
 

@@ -6,13 +6,27 @@ import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.grandvortex.discogstrackr.data.ResourceType
+import com.grandvortex.discogstrackr.presentation.feature.artist.navigateToArtistScreen
 
 const val SEARCH_ROUTE = "search"
 
 fun NavGraphBuilder.searchScreen(
-    onClickItem: (ResourceType, Int) -> Unit,
+    navController: NavController,
     snackbarHostState: SnackbarHostState
 ) {
+    val onClickItem = { type: ResourceType, id: Int ->
+        when (type) {
+            ResourceType.ARTIST -> {
+                navController.navigateToArtistScreen(id)
+            }
+
+            ResourceType.LABEL -> {}
+            ResourceType.RELEASE -> {}
+            ResourceType.MASTER -> {}
+            ResourceType.UNKNOWN -> {}
+        }
+    }
+
     composable(route = SEARCH_ROUTE) {
         SearchRoute(
             onClickItem = onClickItem,
