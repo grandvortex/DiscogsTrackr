@@ -30,7 +30,10 @@ object NetworkModule {
     @Provides
     fun provideHttpAuthInterceptor(): Interceptor = Interceptor { chain ->
         val newRequest =
-            chain.request().newBuilder().addHeader("Authorization", Credentials.keyAndSecret())
+            chain
+                .request()
+                .newBuilder()
+                .addHeader("Authorization", Credentials.keyAndSecret())
                 .build()
         chain.proceed(newRequest)
     }
@@ -54,7 +57,10 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideMoshiConverter(): MoshiConverterFactory = MoshiConverterFactory.create(
-        Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
+        Moshi
+            .Builder()
+            .addLast(KotlinJsonAdapterFactory())
+            .build()
     )
 
     @Singleton
@@ -63,7 +69,10 @@ object NetworkModule {
         okHttpClient: OkHttpClient,
         baseUrl: BaseUrl,
         moshiConverter: MoshiConverterFactory
-    ): Retrofit = Retrofit.Builder().baseUrl(baseUrl.value).client(okHttpClient)
+    ): Retrofit = Retrofit
+        .Builder()
+        .baseUrl(baseUrl.value)
+        .client(okHttpClient)
         .addConverterFactory(moshiConverter).build()
 
     @Singleton

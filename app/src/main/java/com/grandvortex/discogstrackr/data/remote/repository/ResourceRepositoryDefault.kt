@@ -1,6 +1,7 @@
 package com.grandvortex.discogstrackr.data.remote.repository
 
 import com.grandvortex.discogstrackr.data.mapper.toArtist
+import com.grandvortex.discogstrackr.data.mapper.toLabel
 import com.grandvortex.discogstrackr.data.model.Artist
 import com.grandvortex.discogstrackr.data.model.Label
 import com.grandvortex.discogstrackr.data.remote.RemoteResult
@@ -16,6 +17,6 @@ class ResourceRepositoryDefault @Inject constructor(private val remoteService: R
     }
 
     override suspend fun getLabel(id: Int): RemoteResult<Label> {
-        TODO("Not yet implemented")
+        return safeRemoteCall { remoteService.getLabel(id).toLabel() }
     }
 }

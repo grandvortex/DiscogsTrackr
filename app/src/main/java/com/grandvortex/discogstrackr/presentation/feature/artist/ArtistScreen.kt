@@ -36,21 +36,22 @@ import com.grandvortex.discogstrackr.R
 import com.grandvortex.discogstrackr.data.model.Aliase
 import com.grandvortex.discogstrackr.data.model.Artist
 import com.grandvortex.discogstrackr.theme.DiscogsTrackrTheme
+import com.grandvortex.discogstrackr.utils.onCondition
 import java.lang.StringBuilder
 
 @Composable
 fun ArtistRoute(
     modifier: Modifier,
-    detailsViewModel: ArtistViewModel = hiltViewModel(),
+    artistViewModel: ArtistViewModel = hiltViewModel(),
     snackbarHostState: SnackbarHostState
 ) {
-    val viewState by detailsViewModel.viewStateFlow.collectAsStateWithLifecycle(ArtistViewState())
+    val viewState by artistViewModel.viewStateFlow.collectAsStateWithLifecycle(ArtistViewState())
 
     ArtistScreen(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
         state = viewState,
-        onConsumeError = detailsViewModel::onConsumeError
+        onConsumeError = artistViewModel::onConsumeError
     )
 }
 
@@ -71,14 +72,18 @@ fun ArtistScreen(
 
     if (state.isLoading) {
         Box(
-            modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface),
+            modifier = modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.surface),
             contentAlignment = Alignment.Center
         ) {
             CircularProgressIndicator()
         }
     } else if (state.artistData == null) {
         Box(
-            modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.surface),
+            modifier = modifier
+                .fillMaxSize()
+                .background(MaterialTheme.colorScheme.surface),
             contentAlignment = Alignment.Center
         ) {
             Text(text = stringResource(id = R.string.unknown_artist))
@@ -90,11 +95,12 @@ fun ArtistScreen(
 
 @Composable
 fun ArtistContent(
-    modifier: Modifier = Modifier,
-    artist: Artist
+    modifier: Modifier = Modifier, artist: Artist
 ) {
     Column(
-        modifier = modifier.fillMaxSize().verticalScroll(state = rememberScrollState())
+        modifier = modifier
+            .fillMaxSize()
+            .verticalScroll(state = rememberScrollState())
             .background(MaterialTheme.colorScheme.background),
         horizontalAlignment = Alignment.Start,
         verticalArrangement = Arrangement.Top
@@ -102,7 +108,9 @@ fun ArtistContent(
         // Artist image
         val image = if (artist.images.isNotEmpty()) artist.images.first().resourceUrl else ""
         AsyncImage(
-            modifier = modifier.fillMaxWidth().height(300.dp),
+            modifier = modifier
+                .fillMaxWidth()
+                .height(300.dp),
             model = ImageRequest.Builder(context = LocalContext.current).data(image).crossfade(true)
                 .size(Size.ORIGINAL).build(),
             error = painterResource(R.drawable.broken_image),
@@ -111,10 +119,16 @@ fun ArtistContent(
             contentScale = ContentScale.Crop
         )
 
-        Column(modifier = modifier.fillMaxSize().padding(4.dp)) {
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(4.dp)
+        ) {
             // Artist name
             Text(
-                modifier = modifier.fillMaxWidth().padding(bottom = 14.dp),
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 14.dp),
                 text = artist.name,
                 maxLines = 1,
                 style = MaterialTheme.typography.headlineLarge,
@@ -123,33 +137,41 @@ fun ArtistContent(
             )
 
             // Artist real name
-            Text(
-                modifier = modifier.fillMaxWidth(),
-                text = stringResource(id = R.string.artist_real_name),
-                style = MaterialTheme.typography.titleLarge,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                modifier = modifier.fillMaxWidth().padding(bottom = 14.dp),
-                text = artist.realname,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                style = MaterialTheme.typography.bodyLarge
-            )
+            if (artist.realname.isNotEmpty()) {
+                Text(
+                    modifier = modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.artist_real_name),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 14.dp),
+                    text = artist.realname,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
 
             // Artist sites
             if (artist.urls.isNotEmpty()) {
                 Text(
                     modifier = modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.artist_sites),
+                    text = stringResource(id = R.string.sites),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
 
-                artist.urls.forEach { site ->
+                artist.urls.forEachIndexed { index, site ->
                     if (site.isNotEmpty()) {
                         Text(
-                            modifier = modifier.fillMaxWidth(),
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .onCondition(
+                                    condition = index == artist.urls.lastIndex,
+                                    onTrue = { padding(bottom = 14.dp) }),
                             text = "\u2022  $site",
                             style = MaterialTheme.typography.bodyLarge,
                             maxLines = 1,
@@ -171,13 +193,15 @@ fun ArtistContent(
                     }
                 }
                 Text(
-                    modifier = modifier.fillMaxWidth().padding(top = 14.dp),
+                    modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.artist_aliases),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    modifier = modifier.fillMaxWidth().padding(bottom = 14.dp),
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 14.dp),
                     text = aliases.toString(),
                     style = MaterialTheme.typography.bodyLarge
                 )
@@ -201,7 +225,7 @@ fun ArtistContent(
                     fontWeight = FontWeight.Bold
                 )
                 Text(
-                    modifier = modifier.fillMaxWidth().padding(bottom = 14.dp),
+                    modifier = modifier.fillMaxWidth(),
                     text = variations.toString(),
                     style = MaterialTheme.typography.bodyLarge
                 )
@@ -221,18 +245,12 @@ fun ArtistContent(
 fun ArtistContentPreview() {
     DiscogsTrackrTheme {
         ArtistContent(
-            modifier = Modifier,
-            artist = Artist(
+            modifier = Modifier, artist = Artist(
                 aliases = listOf(
                     Aliase(
-                        id = 0,
-                        name = "Daniel Williamson",
-                        resourceUrl = ""
-                    ),
-                    Aliase(
-                        id = 0,
-                        name = "The Bookworm",
-                        resourceUrl = ""
+                        id = 0, name = "Daniel Williamson", resourceUrl = ""
+                    ), Aliase(
+                        id = 0, name = "The Bookworm", resourceUrl = ""
                     )
                 ),
                 dataQuality = "",
@@ -240,9 +258,7 @@ fun ArtistContentPreview() {
                 images = emptyList(),
                 name = "LTJ Bukem",
                 namevariations = listOf(
-                    "Bukem",
-                    "DJ LTJ Bukem",
-                    "L.T.J. Bukem"
+                    "Bukem", "DJ LTJ Bukem", "L.T.J. Bukem"
                 ),
                 profile = "British drum'n'bass DJ, producer/remixer.\n" + "Born: 20 September 1967 in London, England, UK.\n" + "His alias LTJ Bukem is from popular Hawaii Five-O cop show catch phrase Book 'Em Danno as Williamson's name is almost like the main character 'Danny Danno Williams'.", // ktlint-disable max-line-length
                 realname = "Danny Williamson",

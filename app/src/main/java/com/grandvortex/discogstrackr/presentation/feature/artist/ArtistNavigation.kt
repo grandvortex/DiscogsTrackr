@@ -8,15 +8,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 
-const val ARTIST_ROUTE = "details"
-const val ID_PARAM = "id" // Artist id
+const val ARTIST_ROUTE = "artist"
+const val ARTIST_ID_PARAM = "artist_id" // Artist id
 
 fun NavGraphBuilder.artistScreen(modifier: Modifier, snackbarHostState: SnackbarHostState) {
     composable(
-        route = "$ARTIST_ROUTE/{$ID_PARAM}",
-        arguments = listOf(
-            navArgument(ID_PARAM) { type = NavType.IntType }
-        )
+        route = "$ARTIST_ROUTE/{$ARTIST_ID_PARAM}",
+        arguments = listOf(navArgument(ARTIST_ID_PARAM) { type = NavType.IntType })
     ) {
         ArtistRoute(
             modifier = modifier,

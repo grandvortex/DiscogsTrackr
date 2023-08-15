@@ -93,18 +93,22 @@ fun SearchScreen(
 
     // Display main content
     Column(
-        modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.secondary),
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.secondary),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         SearchBar(
-            modifier = modifier.fillMaxWidth().onKeyEvent {
-                if (it.key == Key.Enter) {
-                    onSearchTriggeredFinal()
-                    true
-                } else {
-                    false
-                }
-            },
+            modifier = modifier
+                .fillMaxWidth()
+                .onKeyEvent {
+                    if (it.key == Key.Enter) {
+                        onSearchTriggeredFinal()
+                        true
+                    } else {
+                        false
+                    }
+                },
             query = queryText,
             onQueryChange = { onSearchQueryChanged(it) },
             onSearch = {
@@ -206,15 +210,12 @@ fun SearchResultContent(
     } else {
         LazyColumn(modifier = modifier.fillMaxSize(), contentPadding = PaddingValues(all = 4.dp)) {
             list.forEach { result ->
-                val id = result.id
-                val type = result.type
-
-                item(key = id) {
+                item(key = result.id) {
                     SearchResultItem(
                         type = result.type,
                         info = result.title,
                         imageUrl = result.coverImage,
-                        onClick = { onClickItem(type, id) }
+                        onClick = { onClickItem(result.type, result.id) }
                     )
                 }
             }

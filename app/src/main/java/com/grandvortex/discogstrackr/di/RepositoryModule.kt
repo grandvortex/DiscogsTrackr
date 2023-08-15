@@ -1,39 +1,30 @@
 package com.grandvortex.discogstrackr.di
 
-import com.grandvortex.discogstrackr.data.local.dao.RecentSearchQueryDao
 import com.grandvortex.discogstrackr.data.local.repository.RecentSearchQueryRepository
 import com.grandvortex.discogstrackr.data.local.repository.RecentSearchQueryRepositoryDefault
 import com.grandvortex.discogstrackr.data.remote.repository.ResourceRepository
 import com.grandvortex.discogstrackr.data.remote.repository.ResourceRepositoryDefault
 import com.grandvortex.discogstrackr.data.remote.repository.SearchRepository
 import com.grandvortex.discogstrackr.data.remote.repository.SearchRepositoryDefault
-import com.grandvortex.discogstrackr.data.remote.retrofit.RemoteService
+import dagger.Binds
 import dagger.Module
-import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
-import kotlinx.coroutines.CoroutineScope
+import dagger.hilt.android.components.ViewModelComponent
+import dagger.hilt.android.scopes.ViewModelScoped
 
 @Module
-@InstallIn(SingletonComponent::class)
-object RepositoryModule {
+@InstallIn(ViewModelComponent::class)
+abstract class RepositoryModule {
 
-    @Singleton
-    @Provides
-    fun provideSearchRepository(remoteService: RemoteService): SearchRepository =
-        SearchRepositoryDefault(remoteService)
+    @Binds
+    @ViewModelScoped
+    abstract fun bindSearchRepository(repo: SearchRepositoryDefault): SearchRepository
 
-    @Singleton
-    @Provides
-    fun provideRecentSearchQueryRepository(
-        recentSearchDao: RecentSearchQueryDao,
-        @ApplicationScope appCoroutineScope: CoroutineScope
-    ): RecentSearchQueryRepository =
-        RecentSearchQueryRepositoryDefault(recentSearchDao, appCoroutineScope)
+    @Binds
+    @ViewModelScoped
+    abstract fun bindRecentSearchQueryRepository(repo: RecentSearchQueryRepositoryDefault): RecentSearchQueryRepository
 
-    @Singleton
-    @Provides
-    fun provideArtistRepository(remoteService: RemoteService): ResourceRepository =
-        ResourceRepositoryDefault(remoteService)
+    @Binds
+    @ViewModelScoped
+    abstract fun bindResourceRepository(repo: ResourceRepositoryDefault): ResourceRepository
 }

@@ -7,12 +7,12 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import com.grandvortex.discogstrackr.data.ResourceType
 import com.grandvortex.discogstrackr.presentation.feature.artist.navigateToArtistScreen
+import com.grandvortex.discogstrackr.presentation.feature.label.navigateToLabelScreen
 
 const val SEARCH_ROUTE = "search"
 
 fun NavGraphBuilder.searchScreen(
-    navController: NavController,
-    snackbarHostState: SnackbarHostState
+    navController: NavController, snackbarHostState: SnackbarHostState
 ) {
     val onClickItem = { type: ResourceType, id: Int ->
         when (type) {
@@ -20,7 +20,10 @@ fun NavGraphBuilder.searchScreen(
                 navController.navigateToArtistScreen(id)
             }
 
-            ResourceType.LABEL -> {}
+            ResourceType.LABEL -> {
+                navController.navigateToLabelScreen(id)
+            }
+
             ResourceType.RELEASE -> {}
             ResourceType.MASTER -> {}
             ResourceType.UNKNOWN -> {}
@@ -29,8 +32,7 @@ fun NavGraphBuilder.searchScreen(
 
     composable(route = SEARCH_ROUTE) {
         SearchRoute(
-            onClickItem = onClickItem,
-            snackbarHostState = snackbarHostState
+            onClickItem = onClickItem, snackbarHostState = snackbarHostState
         )
     }
 }

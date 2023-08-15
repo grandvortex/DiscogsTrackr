@@ -8,10 +8,15 @@
     <string name="no_recent_queries">No recent queries</string>
     <string name="loading">Loading…</string>
     <string name="unknown_artist">Unknown Artist</string>
+    <string name="unknown_label">Unknown Label</string>
     <string name="unknown_title">Unknown Title</string>
     <string name="artist_real_name">Real Name:</string>
     <string name="artist_profile">Profile:</string>
-    <string name="artist_sites">Sites:</string>
+    <string name="sites">Sites:</string>
     <string name="artist_aliases">Aliases:</string>
     <string name="artist_name_variations">Variations:</string>
+    <string name="label_sublabels">Sublabels:</string>
+    <string name="label_parent">Parent Label:</string>
+    <string name="label_profile">Profile:</string>
+    <string name="label_contact_info">Contact Info:</string>
 </resources>

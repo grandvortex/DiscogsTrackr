@@ -28,6 +28,7 @@ object DatabaseModule {
     ).build()
 
     @Provides
+    @Singleton
     fun provideRecentSearchDao(
         database: AppDatabase
     ): RecentSearchQueryDao = database.recentSearchDao()
