@@ -32,20 +32,43 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import com.grandvortex.discogstrackr.R
 import com.grandvortex.discogstrackr.data.ResourceType
-import com.grandvortex.discogstrackr.theme.DiscogsTrackrTheme
-import com.grandvortex.discogstrackr.utils.DevicePreviews
+import com.grandvortex.discogstrackr.presentation.feature.artist.navigateToArtistScreen
+import com.grandvortex.discogstrackr.presentation.feature.label.navigateToLabelScreen
+import com.grandvortex.discogstrackr.presentation.feature.release.navigateToReleaseScreen
+import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
+import com.grandvortex.discogstrackr.application.utils.DevicePreviews
 
 @Composable
 fun SearchRoute(
     modifier: Modifier = Modifier,
     searchViewModel: SearchViewModel = hiltViewModel(),
     snackbarHostState: SnackbarHostState,
-    onClickItem: (ResourceType, Int) -> Unit
+    navController: NavController
 ) {
     val viewState by searchViewModel.viewStateFlow.collectAsStateWithLifecycle(SearchViewState())
     val queryText = searchViewModel.queryText
+
+    val onClickItem = { type: ResourceType, id: Int ->
+        when (type) {
+            ResourceType.ARTIST -> {
+                navController.navigateToArtistScreen(id)
+            }
+
+            ResourceType.LABEL -> {
+                navController.navigateToLabelScreen(id)
+            }
+
+            ResourceType.RELEASE -> {
+                navController.navigateToReleaseScreen(id)
+            }
+
+            ResourceType.MASTER -> {}
+            ResourceType.UNKNOWN -> {}
+        }
+    }
 
     SearchScreen(
         modifier = modifier,
@@ -65,7 +88,7 @@ fun SearchRoute(
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun SearchScreen(
-    modifier: Modifier = Modifier,
+    modifier: Modifier,
     viewState: SearchViewState,
     queryText: String = "",
     onSearchActiveChanged: (Boolean) -> Unit,
@@ -98,17 +121,16 @@ fun SearchScreen(
             .background(MaterialTheme.colorScheme.secondary),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        SearchBar(
-            modifier = modifier
-                .fillMaxWidth()
-                .onKeyEvent {
-                    if (it.key == Key.Enter) {
-                        onSearchTriggeredFinal()
-                        true
-                    } else {
-                        false
-                    }
-                },
+        SearchBar(modifier = modifier
+            .fillMaxWidth()
+            .onKeyEvent {
+                if (it.key == Key.Enter) {
+                    onSearchTriggeredFinal()
+                    true
+                } else {
+                    false
+                }
+            },
             query = queryText,
             onQueryChange = { onSearchQueryChanged(it) },
             onSearch = {
@@ -121,9 +143,7 @@ fun SearchScreen(
                 Icon(
                     modifier = modifier.clickable {
                         onSearchTriggeredFinal()
-                    },
-                    imageVector = Icons.Default.Search,
-                    contentDescription = null
+                    }, imageVector = Icons.Default.Search, contentDescription = null
                 )
             },
             trailingIcon = {
@@ -135,13 +155,10 @@ fun SearchScreen(
                             } else {
                                 onSearchQueryChanged("")
                             }
-                        },
-                        imageVector = Icons.Default.Close,
-                        contentDescription = null
+                        }, imageVector = Icons.Default.Close, contentDescription = null
                     )
                 }
-            }
-        ) {
+            }) {
             // Display recently searched queries
             RecentSearchContent(
                 modifier = modifier,
@@ -152,8 +169,7 @@ fun SearchScreen(
         }
         // Display searched content
         SearchResultContent(
-            viewState = viewState,
-            onClickItem = onClickItem
+            viewState = viewState, onClickItem = onClickItem
         )
     }
 }
@@ -175,11 +191,9 @@ fun RecentSearchContent(
         LazyColumn(modifier = modifier.fillMaxSize(), contentPadding = PaddingValues(all = 4.dp)) {
             recentSearchList.forEach { recentQuery ->
                 item {
-                    RecentSearchQueryItem(
-                        query = recentQuery.queryText,
+                    RecentSearchQueryItem(query = recentQuery.queryText,
                         onClickItem = { onClickRecentQueryItem(recentQuery.queryText) },
-                        onClickItemDelete = { onClickDeleteItem(recentQuery.queryText) }
-                    )
+                        onClickItemDelete = { onClickDeleteItem(recentQuery.queryText) })
                 }
             }
         }
@@ -211,12 +225,10 @@ fun SearchResultContent(
         LazyColumn(modifier = modifier.fillMaxSize(), contentPadding = PaddingValues(all = 4.dp)) {
             list.forEach { result ->
                 item(key = result.id) {
-                    SearchResultItem(
-                        type = result.type,
+                    SearchResultItem(type = result.type,
                         info = result.title,
                         imageUrl = result.coverImage,
-                        onClick = { onClickItem(result.type, result.id) }
-                    )
+                        onClick = { onClickItem(result.type, result.id) })
                 }
             }
         }
@@ -236,7 +248,8 @@ fun SearchScreenPreview() {
             onClickRecentQueryItem = {},
             onClickDeleteRecentQueryItem = {},
             onConsumeError = {},
-            snackbarHostState = SnackbarHostState()
+            snackbarHostState = SnackbarHostState(),
+            modifier = Modifier
         )
     }
 }

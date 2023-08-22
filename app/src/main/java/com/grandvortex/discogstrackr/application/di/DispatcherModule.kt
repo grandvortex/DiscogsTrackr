@@ -1,7 +1,7 @@
-package com.grandvortex.discogstrackr.di
+package com.grandvortex.discogstrackr.application.di
 
-import com.grandvortex.discogstrackr.di.AppDispatchers.Default
-import com.grandvortex.discogstrackr.di.AppDispatchers.IO
+import com.grandvortex.discogstrackr.application.di.AppDispatchers.Default
+import com.grandvortex.discogstrackr.application.di.AppDispatchers.IO
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.data.local.repository
+package com.grandvortex.discogstrackr.data.repository.parent
 
 import com.grandvortex.discogstrackr.data.model.RecentSearch
 import kotlinx.coroutines.flow.Flow

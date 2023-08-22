@@ -14,26 +14,8 @@ const val SEARCH_ROUTE = "search"
 fun NavGraphBuilder.searchScreen(
     navController: NavController, snackbarHostState: SnackbarHostState
 ) {
-    val onClickItem = { type: ResourceType, id: Int ->
-        when (type) {
-            ResourceType.ARTIST -> {
-                navController.navigateToArtistScreen(id)
-            }
-
-            ResourceType.LABEL -> {
-                navController.navigateToLabelScreen(id)
-            }
-
-            ResourceType.RELEASE -> {}
-            ResourceType.MASTER -> {}
-            ResourceType.UNKNOWN -> {}
-        }
-    }
-
     composable(route = SEARCH_ROUTE) {
-        SearchRoute(
-            onClickItem = onClickItem, snackbarHostState = snackbarHostState
-        )
+        SearchRoute(snackbarHostState = snackbarHostState, navController = navController)
     }
 }
 

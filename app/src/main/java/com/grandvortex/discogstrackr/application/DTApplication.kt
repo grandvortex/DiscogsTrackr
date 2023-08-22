@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr
+package com.grandvortex.discogstrackr.application
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

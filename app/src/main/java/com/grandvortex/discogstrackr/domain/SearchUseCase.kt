@@ -2,7 +2,7 @@ package com.grandvortex.discogstrackr.domain
 
 import com.grandvortex.discogstrackr.data.model.SearchResults
 import com.grandvortex.discogstrackr.data.remote.RemoteResult
-import com.grandvortex.discogstrackr.data.remote.repository.SearchRepository
+import com.grandvortex.discogstrackr.data.repository.parent.SearchRepository
 import javax.inject.Inject
 
 class SearchUseCase @Inject constructor(

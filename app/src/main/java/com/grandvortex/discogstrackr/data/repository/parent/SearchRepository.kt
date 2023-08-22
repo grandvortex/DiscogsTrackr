@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.data.remote.repository
+package com.grandvortex.discogstrackr.data.repository.parent
 
 import com.grandvortex.discogstrackr.data.model.SearchResults
 import com.grandvortex.discogstrackr.data.remote.RemoteResult

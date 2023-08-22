@@ -5,7 +5,7 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class ArtistDTO(
-    @Json(name = "aliases") val aliases: List<AliaseDTO>? = null,
+    @Json(name = "aliases") val aliases: List<ArtistAliaseDTO>? = null,
     @Json(name = "data_quality") val dataQuality: String? = null,
     @Json(name = "id") val id: Int? = null,
     @Json(name = "images") val images: List<ArtistImageDTO>? = null,
@@ -20,7 +20,7 @@ data class ArtistDTO(
 )
 
 @JsonClass(generateAdapter = true)
-data class AliaseDTO(
+data class ArtistAliaseDTO(
     @Json(name = "id") val id: Int? = null,
     @Json(name = "name") val name: String? = null,
     @Json(name = "resource_url") val resourceUrl: String? = null

@@ -1,10 +1,10 @@
-package com.grandvortex.discogstrackr.di
+package com.grandvortex.discogstrackr.application.di
 
 import android.util.Log
 import com.grandvortex.discogstrackr.BuildConfig
 import com.grandvortex.discogstrackr.data.remote.retrofit.RemoteService
-import com.grandvortex.discogstrackr.utils.BaseUrl
-import com.grandvortex.discogstrackr.utils.Credentials
+import com.grandvortex.discogstrackr.application.utils.BaseUrl
+import com.grandvortex.discogstrackr.application.utils.Credentials
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module

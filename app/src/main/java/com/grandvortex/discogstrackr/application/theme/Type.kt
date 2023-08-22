@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.theme
+package com.grandvortex.discogstrackr.application.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

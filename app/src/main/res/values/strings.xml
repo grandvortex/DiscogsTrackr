@@ -9,6 +9,7 @@
     <string name="loading">Loading…</string>
     <string name="unknown_artist">Unknown Artist</string>
     <string name="unknown_label">Unknown Label</string>
+    <string name="unknown_release">Unknown Release</string>
     <string name="unknown_title">Unknown Title</string>
     <string name="artist_real_name">Real Name:</string>
     <string name="artist_profile">Profile:</string>

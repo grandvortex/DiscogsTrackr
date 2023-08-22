@@ -12,10 +12,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+
 @HiltViewModel
 class LabelViewModel @Inject constructor(
-    labelUseCase: LabelUseCase,
-    savedStateHandle: SavedStateHandle
+    labelUseCase: LabelUseCase, savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     // Navigation arguments from SearchScreen
@@ -27,7 +27,7 @@ class LabelViewModel @Inject constructor(
     init {
         viewModelScope.launch {
             _viewStateFlow.update { state -> state.copy(isLoading = true) }
-            updateState(labelUseCase.getLabel(id))
+            updateState(labelUseCase(id))
         }
     }
 
@@ -36,8 +36,7 @@ class LabelViewModel @Inject constructor(
             is RemoteResult.Success -> {
                 _viewStateFlow.update { state ->
                     state.copy(
-                        isLoading = false,
-                        labelData = result.data
+                        isLoading = false, labelData = result.data
                     )
                 }
             }
@@ -45,8 +44,7 @@ class LabelViewModel @Inject constructor(
             is RemoteResult.Error -> {
                 _viewStateFlow.update { state ->
                     state.copy(
-                        isLoading = false,
-                        error = result.e.message ?: ""
+                        isLoading = false, error = result.e.message ?: ""
                     )
                 }
             }

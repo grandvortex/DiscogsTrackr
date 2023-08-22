@@ -2,6 +2,7 @@ package com.grandvortex.discogstrackr.data.remote.retrofit
 
 import com.grandvortex.discogstrackr.data.remote.dto.ArtistDTO
 import com.grandvortex.discogstrackr.data.remote.dto.LabelDTO
+import com.grandvortex.discogstrackr.data.remote.dto.ReleaseDTO
 import com.grandvortex.discogstrackr.data.remote.dto.SearchResultsDTO
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -16,4 +17,7 @@ interface RemoteService {
 
     @GET("labels/{label_id}")
     suspend fun getLabel(@Path("label_id") labelID: Int): LabelDTO
+
+    @GET("releases/{release_id}")
+    suspend fun getRelease(@Path("release_id") releaseID: Int): ReleaseDTO
 }

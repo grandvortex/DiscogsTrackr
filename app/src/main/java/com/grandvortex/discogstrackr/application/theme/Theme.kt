@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.theme
+package com.grandvortex.discogstrackr.application.theme
 
 import android.app.Activity
 import android.os.Build

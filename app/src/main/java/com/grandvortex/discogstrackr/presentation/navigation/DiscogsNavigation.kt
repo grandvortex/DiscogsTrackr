@@ -16,6 +16,7 @@ import com.grandvortex.discogstrackr.presentation.feature.favorites.FAVORITES_RO
 import com.grandvortex.discogstrackr.presentation.feature.favorites.favoritesScreen
 import com.grandvortex.discogstrackr.presentation.feature.favorites.navigateToFavoritesScreen
 import com.grandvortex.discogstrackr.presentation.feature.label.labelScreen
+import com.grandvortex.discogstrackr.presentation.feature.release.releaseScreen
 import com.grandvortex.discogstrackr.presentation.feature.search.SEARCH_ROUTE
 import com.grandvortex.discogstrackr.presentation.feature.search.navigateToSearchScreen
 import com.grandvortex.discogstrackr.presentation.feature.search.searchScreen
@@ -50,8 +51,9 @@ fun DiscogsNavHost(
         navController = navController, startDestination = SEARCH_ROUTE, modifier = modifier
     ) {
         searchScreen(navController = navController, snackbarHostState = snackbarHostState)
-        artistScreen(modifier = modifier, snackbarHostState = snackbarHostState)
-        labelScreen(modifier = modifier, snackbarHostState = snackbarHostState)
+        artistScreen(snackbarHostState = snackbarHostState)
+        releaseScreen(snackbarHostState = snackbarHostState)
+        labelScreen(snackbarHostState = snackbarHostState)
         favoritesScreen()
     }
 }

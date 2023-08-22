@@ -35,13 +35,13 @@ import coil.size.Size
 import com.grandvortex.discogstrackr.R
 import com.grandvortex.discogstrackr.data.model.Aliase
 import com.grandvortex.discogstrackr.data.model.Artist
-import com.grandvortex.discogstrackr.theme.DiscogsTrackrTheme
-import com.grandvortex.discogstrackr.utils.onCondition
+import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
+import com.grandvortex.discogstrackr.application.utils.onCondition
 import java.lang.StringBuilder
 
 @Composable
 fun ArtistRoute(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     artistViewModel: ArtistViewModel = hiltViewModel(),
     snackbarHostState: SnackbarHostState
 ) {
@@ -50,7 +50,7 @@ fun ArtistRoute(
     ArtistScreen(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
-        state = viewState,
+        viewState = viewState,
         onConsumeError = artistViewModel::onConsumeError
     )
 }
@@ -59,18 +59,18 @@ fun ArtistRoute(
 fun ArtistScreen(
     modifier: Modifier,
     snackbarHostState: SnackbarHostState,
-    state: ArtistViewState,
+    viewState: ArtistViewState,
     onConsumeError: () -> Unit
 ) {
     // Display errors
-    if (state.error.isNotEmpty()) {
+    if (viewState.error.isNotEmpty()) {
         LaunchedEffect(key1 = snackbarHostState) {
-            snackbarHostState.showSnackbar(state.error)
+            snackbarHostState.showSnackbar(viewState.error)
             onConsumeError()
         }
     }
 
-    if (state.isLoading) {
+    if (viewState.isLoading) {
         Box(
             modifier = modifier
                 .fillMaxSize()
@@ -79,7 +79,7 @@ fun ArtistScreen(
         ) {
             CircularProgressIndicator()
         }
-    } else if (state.artistData == null) {
+    } else if (viewState.artistData == null) {
         Box(
             modifier = modifier
                 .fillMaxSize()
@@ -89,13 +89,13 @@ fun ArtistScreen(
             Text(text = stringResource(id = R.string.unknown_artist))
         }
     } else {
-        ArtistContent(artist = state.artistData)
+        ArtistContent(modifier = modifier, artist = viewState.artistData)
     }
 }
 
 @Composable
 fun ArtistContent(
-    modifier: Modifier = Modifier, artist: Artist
+    modifier: Modifier, artist: Artist
 ) {
     Column(
         modifier = modifier
@@ -169,8 +169,7 @@ fun ArtistContent(
                         Text(
                             modifier = modifier
                                 .fillMaxWidth()
-                                .onCondition(
-                                    condition = index == artist.urls.lastIndex,
+                                .onCondition(condition = index == artist.urls.lastIndex,
                                     onTrue = { padding(bottom = 14.dp) }),
                             text = "\u2022  $site",
                             style = MaterialTheme.typography.bodyLarge,

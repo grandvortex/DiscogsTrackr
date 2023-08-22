@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr
+package com.grandvortex.discogstrackr.application
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -16,8 +16,8 @@ import com.grandvortex.discogstrackr.presentation.navigation.DiscogsNavBar
 import com.grandvortex.discogstrackr.presentation.navigation.DiscogsNavHost
 import com.grandvortex.discogstrackr.presentation.navigation.TabScreen
 import com.grandvortex.discogstrackr.presentation.navigation.navigateToTabScreen
-import com.grandvortex.discogstrackr.theme.DiscogsTrackrTheme
-import com.grandvortex.discogstrackr.utils.DevicePreviews
+import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
+import com.grandvortex.discogstrackr.application.utils.DevicePreviews
 
 @Composable
 fun DiscogsTrackrApp() {

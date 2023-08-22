@@ -11,15 +11,12 @@ import androidx.navigation.navArgument
 const val ARTIST_ROUTE = "artist"
 const val ARTIST_ID_PARAM = "artist_id" // Artist id
 
-fun NavGraphBuilder.artistScreen(modifier: Modifier, snackbarHostState: SnackbarHostState) {
+fun NavGraphBuilder.artistScreen(snackbarHostState: SnackbarHostState) {
     composable(
         route = "$ARTIST_ROUTE/{$ARTIST_ID_PARAM}",
         arguments = listOf(navArgument(ARTIST_ID_PARAM) { type = NavType.IntType })
     ) {
-        ArtistRoute(
-            modifier = modifier,
-            snackbarHostState = snackbarHostState
-        )
+        ArtistRoute(snackbarHostState = snackbarHostState)
     }
 }
 

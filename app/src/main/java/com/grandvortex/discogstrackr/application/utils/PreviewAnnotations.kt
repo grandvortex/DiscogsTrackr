@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.utils
+package com.grandvortex.discogstrackr.application.utils
 
 import android.content.res.Configuration
 import androidx.compose.ui.tooling.preview.Preview

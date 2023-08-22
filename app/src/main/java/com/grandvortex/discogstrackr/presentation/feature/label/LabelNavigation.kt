@@ -11,14 +11,12 @@ import androidx.navigation.navArgument
 const val LABEL_ROUTE = "label"
 const val LABEL_ID_PARAM = "label_id" // Label id
 
-fun NavGraphBuilder.labelScreen(modifier: Modifier, snackbarHostState: SnackbarHostState) {
+fun NavGraphBuilder.labelScreen(snackbarHostState: SnackbarHostState) {
     composable(
         route = "$LABEL_ROUTE/{$LABEL_ID_PARAM}",
         arguments = listOf(navArgument(LABEL_ID_PARAM) { type = NavType.IntType })
     ) {
-        LabelRoute(
-            modifier = modifier, snackbarHostState = snackbarHostState
-        )
+        LabelRoute(snackbarHostState = snackbarHostState)
     }
 }
 

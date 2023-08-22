@@ -37,12 +37,12 @@ import com.grandvortex.discogstrackr.data.model.Label
 import com.grandvortex.discogstrackr.data.model.LabelImage
 import com.grandvortex.discogstrackr.data.model.ParentLabel
 import com.grandvortex.discogstrackr.data.model.Sublabel
-import com.grandvortex.discogstrackr.theme.DiscogsTrackrTheme
+import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
 import java.lang.StringBuilder
 
 @Composable
 fun LabelRoute(
-    modifier: Modifier,
+    modifier: Modifier = Modifier,
     labelViewModel: LabelViewModel = hiltViewModel(),
     snackbarHostState: SnackbarHostState
 ) {
@@ -51,7 +51,7 @@ fun LabelRoute(
     LabelScreen(
         modifier = modifier,
         snackbarHostState = snackbarHostState,
-        state = viewState,
+        viewState = viewState,
         onConsumeError = labelViewModel::onConsumeError
     )
 }
@@ -60,17 +60,17 @@ fun LabelRoute(
 fun LabelScreen(
     modifier: Modifier,
     snackbarHostState: SnackbarHostState,
-    state: LabelViewState,
+    viewState: LabelViewState,
     onConsumeError: () -> Unit
 ) {
-    if (state.error.isNotEmpty()) {
+    if (viewState.error.isNotEmpty()) {
         LaunchedEffect(key1 = snackbarHostState) {
-            snackbarHostState.showSnackbar(state.error)
+            snackbarHostState.showSnackbar(viewState.error)
             onConsumeError()
         }
     }
 
-    if (state.isLoading) {
+    if (viewState.isLoading) {
         Box(
             modifier = modifier
                 .fillMaxSize()
@@ -79,7 +79,7 @@ fun LabelScreen(
         ) {
             CircularProgressIndicator()
         }
-    } else if (state.labelData == null) {
+    } else if (viewState.labelData == null) {
         Box(
             modifier = modifier
                 .fillMaxSize()
@@ -89,12 +89,12 @@ fun LabelScreen(
             Text(text = stringResource(id = R.string.unknown_label))
         }
     } else {
-        LabelConent(label = state.labelData)
+        LabelConent(modifier = modifier, label = viewState.labelData)
     }
 }
 
 @Composable
-fun LabelConent(modifier: Modifier = Modifier, label: Label) {
+fun LabelConent(modifier: Modifier, label: Label) {
     Column(
         modifier = modifier
             .fillMaxSize()
