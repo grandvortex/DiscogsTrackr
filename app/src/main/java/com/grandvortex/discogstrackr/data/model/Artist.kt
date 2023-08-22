@@ -12,7 +12,15 @@ data class Artist(
     val releasesUrl: String,
     val resourceUrl: String,
     val uri: String,
-    val urls: List<String>
+    val urls: List<String>,
+    val members: List<Member>
+)
+
+data class Member(
+    val active: Boolean,
+    val id: Int,
+    val name: String,
+    val resourceUrl: String
 )
 
 data class Aliase(

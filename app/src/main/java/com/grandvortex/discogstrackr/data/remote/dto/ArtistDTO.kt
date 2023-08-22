@@ -16,7 +16,16 @@ data class ArtistDTO(
     @Json(name = "releases_url") val releasesUrl: String? = null,
     @Json(name = "resource_url") val resourceUrl: String? = null,
     @Json(name = "uri") val uri: String? = null,
-    @Json(name = "urls") val urls: List<String>? = null
+    @Json(name = "urls") val urls: List<String>? = null,
+    @Json(name = "members") val members: List<ArtistMemberDTO>? = null
+)
+
+@JsonClass(generateAdapter = true)
+data class ArtistMemberDTO(
+    @Json(name = "active") val active: Boolean? = null,
+    @Json(name = "id") val id: Int? = null,
+    @Json(name = "name") val name: String? = null,
+    @Json(name = "resource_url") val resourceUrl: String? = null
 )
 
 @JsonClass(generateAdapter = true)

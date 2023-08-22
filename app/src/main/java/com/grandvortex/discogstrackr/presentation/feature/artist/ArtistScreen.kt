@@ -155,6 +155,23 @@ fun ArtistContent(
                 )
             }
 
+            // Artist profile
+            if (artist.profile.isNotEmpty()) {
+                Text(
+                    modifier = modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.profile),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 14.dp),
+                    text = artist.profile,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
             // Artist sites
             if (artist.urls.isNotEmpty()) {
                 Text(
@@ -178,6 +195,32 @@ fun ArtistContent(
                         )
                     }
                 }
+            }
+
+            // Artist members
+            if (artist.members.isNotEmpty()) {
+                val members = StringBuilder()
+                artist.members.forEachIndexed { index, member ->
+                    if (member.name.isNotEmpty()) {
+                        members.append(member.name)
+                        if (index != artist.members.lastIndex) {
+                            members.append(", ")
+                        }
+                    }
+                }
+                Text(
+                    modifier = modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.artist_members),
+                    style = MaterialTheme.typography.titleLarge,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 14.dp),
+                    text = members.toString(),
+                    style = MaterialTheme.typography.bodyLarge
+                )
             }
 
             // Artist aliases
@@ -273,7 +316,8 @@ fun ArtistContentPreview() {
                     "Instagram",
                     "Spotify",
                     "Wikipedia"
-                )
+                ),
+                members = emptyList()
             )
         )
     }

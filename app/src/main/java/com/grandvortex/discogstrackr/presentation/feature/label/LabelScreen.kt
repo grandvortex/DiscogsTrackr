@@ -138,7 +138,7 @@ fun LabelConent(modifier: Modifier, label: Label) {
             if (label.profile.isNotEmpty()) {
                 Text(
                     modifier = modifier.fillMaxWidth(),
-                    text = stringResource(id = R.string.label_profile),
+                    text = stringResource(id = R.string.profile),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold
                 )
@@ -147,8 +147,6 @@ fun LabelConent(modifier: Modifier, label: Label) {
                         .fillMaxWidth()
                         .padding(bottom = 14.dp),
                     text = label.profile,
-                    maxLines = 4,
-                    overflow = TextOverflow.Ellipsis,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }

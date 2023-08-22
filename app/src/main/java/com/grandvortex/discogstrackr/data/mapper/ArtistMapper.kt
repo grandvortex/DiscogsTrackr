@@ -3,14 +3,13 @@ package com.grandvortex.discogstrackr.data.mapper
 import com.grandvortex.discogstrackr.data.model.Aliase
 import com.grandvortex.discogstrackr.data.model.Artist
 import com.grandvortex.discogstrackr.data.model.Image
+import com.grandvortex.discogstrackr.data.model.Member
 import com.grandvortex.discogstrackr.data.remote.dto.ArtistDTO
 
 fun ArtistDTO.toArtist(): Artist {
     val aliaseList = aliases?.map { dto ->
         Aliase(
-            id = dto.id ?: -1,
-            name = dto.name ?: "",
-            resourceUrl = dto.resourceUrl ?: ""
+            id = dto.id ?: -1, name = dto.name ?: "", resourceUrl = dto.resourceUrl ?: ""
         )
     } ?: emptyList()
 
@@ -22,6 +21,15 @@ fun ArtistDTO.toArtist(): Artist {
             uri = dto.uri ?: "",
             uri150 = dto.uri150 ?: "",
             width = dto.width ?: 0
+        )
+    } ?: emptyList()
+
+    val membersList = members?.map { dto ->
+        Member(
+            active = dto.active ?: false,
+            id = dto.id ?: -1,
+            name = dto.name ?: "",
+            resourceUrl = dto.resourceUrl ?: ""
         )
     } ?: emptyList()
 
@@ -37,6 +45,7 @@ fun ArtistDTO.toArtist(): Artist {
         releasesUrl = releasesUrl ?: "",
         resourceUrl = resourceUrl ?: "",
         uri = uri ?: "",
-        urls = urls ?: emptyList()
+        urls = urls ?: emptyList(),
+        members = membersList
     )
 }
