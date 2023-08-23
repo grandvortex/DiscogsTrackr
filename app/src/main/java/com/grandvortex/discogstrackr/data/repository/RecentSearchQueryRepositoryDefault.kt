@@ -1,17 +1,17 @@
 package com.grandvortex.discogstrackr.data.repository
 
+import com.grandvortex.discogstrackr.application.di.ApplicationScope
 import com.grandvortex.discogstrackr.data.local.dao.RecentSearchQueryDao
 import com.grandvortex.discogstrackr.data.local.entity.RecentSearchEntity
 import com.grandvortex.discogstrackr.data.mapper.toRecentSearch
 import com.grandvortex.discogstrackr.data.model.RecentSearch
 import com.grandvortex.discogstrackr.data.repository.parent.RecentSearchQueryRepository
-import com.grandvortex.discogstrackr.application.di.ApplicationScope
-import javax.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import kotlinx.datetime.Clock
+import javax.inject.Inject
 
 class RecentSearchQueryRepositoryDefault @Inject constructor(
     private val recentSearchDao: RecentSearchQueryDao,

@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,6 +24,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -33,19 +35,15 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.grandvortex.discogstrackr.R
+import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
 import com.grandvortex.discogstrackr.data.model.Release
 import com.grandvortex.discogstrackr.data.model.ReleaseArtist
 import com.grandvortex.discogstrackr.data.model.ReleaseCommunity
-import com.grandvortex.discogstrackr.data.model.ReleaseContributor
 import com.grandvortex.discogstrackr.data.model.ReleaseFormat
-import com.grandvortex.discogstrackr.data.model.ReleaseIdentifier
-import com.grandvortex.discogstrackr.data.model.ReleaseImage
 import com.grandvortex.discogstrackr.data.model.ReleaseRating
 import com.grandvortex.discogstrackr.data.model.ReleaseSubinfo
 import com.grandvortex.discogstrackr.data.model.ReleaseSubmitter
-import com.grandvortex.discogstrackr.data.model.ReleaseTrack
-import com.grandvortex.discogstrackr.data.model.ReleaseVideo
-import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
+import com.grandvortex.discogstrackr.presentation.utils.onCondition
 
 @Composable
 fun ReleaseRoute(
@@ -132,15 +130,187 @@ fun ReleaseContent(modifier: Modifier, release: Release) {
         ) {
             // Release name
             Text(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(bottom = 14.dp),
+                modifier = modifier.fillMaxWidth(),
                 text = release.title,
                 maxLines = 1,
-                style = MaterialTheme.typography.headlineLarge,
+                style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis
             )
+
+            // Release artists
+            if (release.artists.isNotEmpty()) {
+                val artist = release.artists.joinToString(", ") { it.name }
+
+                Row(
+                    modifier = modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        modifier = modifier
+                            .padding(end = 4.dp)
+                            .alignByBaseline(),
+                        text = stringResource(id = R.string.artist),
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Light,
+                        fontStyle = FontStyle.Italic
+                    )
+                    Text(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .alignByBaseline(),
+                        text = artist,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
+
+            // Release date
+            if (release.releasedFormatted.isNotEmpty()) {
+                Row(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 14.dp)
+                ) {
+                    Text(
+                        modifier = modifier
+                            .padding(end = 4.dp)
+                            .alignByBaseline(),
+                        text = stringResource(id = R.string.released),
+                        style = MaterialTheme.typography.labelLarge,
+                        fontWeight = FontWeight.Light,
+                        fontStyle = FontStyle.Italic
+                    )
+                    Text(
+                        modifier = modifier
+                            .fillMaxWidth()
+                            .weight(1f)
+                            .alignByBaseline(),
+                        text = release.releasedFormatted,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
+
+            // Release labels
+            if (release.labels.isNotEmpty()) {
+                val labels = release.labels.joinToString(", ") { it.name }
+
+                Text(
+                    modifier = modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.label),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 14.dp),
+                    text = labels,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
+            // Release series
+            if (release.series.isNotEmpty()) {
+                val series = release.series.joinToString(", ") { it.name }
+
+                Text(
+                    modifier = modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.series),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 14.dp),
+                    text = series,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
+            // Release formats
+            if (release.formats.isNotEmpty()) {
+                Text(
+                    modifier = modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.format),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+
+                release.formats.forEachIndexed { index, format ->
+                    if (format.name.isNotEmpty()) {
+                        val description = format.descriptions.joinToString(", ")
+
+                        Text(
+                            modifier = modifier
+                                .fillMaxWidth()
+                                .onCondition(condition = index == release.formats.lastIndex,
+                                    onTrue = { padding(bottom = 14.dp) }),
+                            text = "${format.name}: $description",
+                            style = MaterialTheme.typography.bodyLarge,
+                            maxLines = 3,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
+                }
+            }
+
+            // Release country
+            if (release.country.isNotEmpty()) {
+                Text(
+                    modifier = modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.country),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 14.dp),
+                    text = release.country,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
+            // Release genre
+            if (release.genres.isNotEmpty()) {
+                val genres = release.genres.joinToString(", ")
+
+                Text(
+                    modifier = modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.genre),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 14.dp),
+                    text = genres,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+
+            // Release styles
+            if (release.styles.isNotEmpty()) {
+                val styles = release.styles.joinToString(", ")
+
+                Text(
+                    modifier = modifier.fillMaxWidth(),
+                    text = stringResource(id = R.string.style),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+                Text(
+                    modifier = modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 14.dp),
+                    text = styles,
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
         }
     }
 }
@@ -157,11 +327,37 @@ fun LabelContentPreview() {
     DiscogsTrackrTheme {
         ReleaseContent(
             modifier = Modifier, release = Release(
-                artists = emptyList<ReleaseArtist>(),
+                artists = listOf(
+                    ReleaseArtist(
+                        anv = "",
+                        id = -1,
+                        join = "",
+                        name = "LTJ Bukem",
+                        resourceUrl = "",
+                        role = "",
+                        tracks = ""
+                    ), ReleaseArtist(
+                        anv = "",
+                        id = -1,
+                        join = "",
+                        name = "DJ Sy",
+                        resourceUrl = "",
+                        role = "",
+                        tracks = ""
+                    ), ReleaseArtist(
+                        anv = "",
+                        id = -1,
+                        join = "",
+                        name = "Calibre",
+                        resourceUrl = "",
+                        role = "",
+                        tracks = ""
+                    )
+                ),
                 artistsSort = "",
                 blockedFromSale = false,
                 community = ReleaseCommunity(
-                    contributors = emptyList<ReleaseContributor>(),
+                    contributors = emptyList(),
                     dataQuality = "",
                     have = 0,
                     rating = ReleaseRating(
@@ -173,36 +369,112 @@ fun LabelContentPreview() {
                     ),
                     want = 0
                 ),
-                companies = emptyList<ReleaseSubinfo>(),
-                country = "",
+                companies = emptyList(),
+                country = "UK",
                 dataQuality = "",
                 dateAdded = "",
                 dateChanged = "",
                 estimatedWeight = 0,
-                extraartists = emptyList<ReleaseArtist>(),
+                extraartists = emptyList(),
                 formatQuantity = 0,
-                formats = emptyList<ReleaseFormat>(),
-                genres = emptyList<String>(),
+                formats = listOf(
+                    ReleaseFormat(
+                        name = "CD",
+                        qty = "",
+                        descriptions = listOf("Compilation")
+                    ),
+                    ReleaseFormat(
+                        name = "Tape",
+                        qty = "",
+                        descriptions = listOf("Single Track")
+                    ),
+                    ReleaseFormat(
+                        name = "Vinyl",
+                        qty = "",
+                        descriptions = listOf("Single")
+                    )
+                ),
+                genres = listOf("Drum and Bass, Electronic, Intelligent DnB"),
                 id = 0,
-                identifiers = emptyList<ReleaseIdentifier>(),
-                images = emptyList<ReleaseImage>(),
-                labels = emptyList<ReleaseSubinfo>(),
+                identifiers = emptyList(),
+                images = emptyList(),
+                labels = listOf(
+                    ReleaseSubinfo(
+                        name = "Good Looking Records",
+                        catno = "",
+                        entityType = "",
+                        entityTypeName = "",
+                        id = -1,
+                        resourceUrl = ""
+                    ), ReleaseSubinfo(
+                        name = "Looking Good Records",
+                        catno = "",
+                        entityType = "",
+                        entityTypeName = "",
+                        id = -1,
+                        resourceUrl = ""
+                    ), ReleaseSubinfo(
+                        name = "Soul:r",
+                        catno = "",
+                        entityType = "",
+                        entityTypeName = "",
+                        id = -1,
+                        resourceUrl = ""
+                    ), ReleaseSubinfo(
+                        name = "Metalheads",
+                        catno = "",
+                        entityType = "",
+                        entityTypeName = "",
+                        id = -1,
+                        resourceUrl = ""
+                    )
+                ),
                 lowestPrice = 0.0,
                 masterId = 0,
                 masterUrl = "",
                 notes = "",
                 numForSale = 0,
                 released = "",
-                releasedFormatted = "",
+                releasedFormatted = "06 May 2002",
                 resourceUrl = "",
-                series = emptyList<ReleaseSubinfo>(),
+                series = listOf(
+                    ReleaseSubinfo(
+                        name = "Producer",
+                        catno = "",
+                        entityType = "",
+                        entityTypeName = "",
+                        id = -1,
+                        resourceUrl = ""
+                    ), ReleaseSubinfo(
+                        name = "Earth",
+                        catno = "",
+                        entityType = "",
+                        entityTypeName = "",
+                        id = -1,
+                        resourceUrl = ""
+                    ), ReleaseSubinfo(
+                        name = "Logical Progressions",
+                        catno = "",
+                        entityType = "",
+                        entityTypeName = "",
+                        id = -1,
+                        resourceUrl = ""
+                    ), ReleaseSubinfo(
+                        name = "Progression Sessions",
+                        catno = "",
+                        entityType = "",
+                        entityTypeName = "",
+                        id = -1,
+                        resourceUrl = ""
+                    )
+                ),
                 status = "",
-                styles = emptyList<String>(),
+                styles = listOf("DnB, Electronic"),
                 thumb = "",
                 title = "Producer 05 - Rarities",
-                tracklist = emptyList<ReleaseTrack>(),
+                tracklist = emptyList(),
                 uri = "",
-                videos = emptyList<ReleaseVideo>(),
+                videos = emptyList(),
                 year = 2002
             )
         )

@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.application.utils
+package com.grandvortex.discogstrackr.presentation.utils
 
 import androidx.compose.ui.Modifier
 

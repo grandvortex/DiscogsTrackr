@@ -34,12 +34,12 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import com.grandvortex.discogstrackr.R
+import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
 import com.grandvortex.discogstrackr.data.ResourceType
 import com.grandvortex.discogstrackr.presentation.feature.artist.navigateToArtistScreen
 import com.grandvortex.discogstrackr.presentation.feature.label.navigateToLabelScreen
 import com.grandvortex.discogstrackr.presentation.feature.release.navigateToReleaseScreen
-import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
-import com.grandvortex.discogstrackr.application.utils.DevicePreviews
+import com.grandvortex.discogstrackr.presentation.utils.DevicePreviews
 
 @Composable
 fun SearchRoute(

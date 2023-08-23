@@ -1,7 +1,6 @@
 package com.grandvortex.discogstrackr.presentation.feature.label
 
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType

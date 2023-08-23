@@ -7,11 +7,11 @@ import com.grandvortex.discogstrackr.data.model.Label
 import com.grandvortex.discogstrackr.data.remote.RemoteResult
 import com.grandvortex.discogstrackr.domain.LabelUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
 class LabelViewModel @Inject constructor(

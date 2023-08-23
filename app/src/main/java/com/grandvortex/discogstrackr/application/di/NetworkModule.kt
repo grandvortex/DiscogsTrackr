@@ -2,21 +2,21 @@ package com.grandvortex.discogstrackr.application.di
 
 import android.util.Log
 import com.grandvortex.discogstrackr.BuildConfig
+import com.grandvortex.discogstrackr.data.remote.BaseUrl
+import com.grandvortex.discogstrackr.data.remote.Credentials
 import com.grandvortex.discogstrackr.data.remote.retrofit.RemoteService
-import com.grandvortex.discogstrackr.application.utils.BaseUrl
-import com.grandvortex.discogstrackr.application.utils.Credentials
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)

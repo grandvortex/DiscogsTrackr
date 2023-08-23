@@ -1,11 +1,11 @@
 package com.grandvortex.discogstrackr.application.di
 
-import com.grandvortex.discogstrackr.data.repository.parent.RecentSearchQueryRepository
 import com.grandvortex.discogstrackr.data.repository.RecentSearchQueryRepositoryDefault
-import com.grandvortex.discogstrackr.data.repository.parent.ResourceRepository
 import com.grandvortex.discogstrackr.data.repository.ResourceRepositoryDefault
-import com.grandvortex.discogstrackr.data.repository.parent.SearchRepository
 import com.grandvortex.discogstrackr.data.repository.SearchRepositoryDefault
+import com.grandvortex.discogstrackr.data.repository.parent.RecentSearchQueryRepository
+import com.grandvortex.discogstrackr.data.repository.parent.ResourceRepository
+import com.grandvortex.discogstrackr.data.repository.parent.SearchRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

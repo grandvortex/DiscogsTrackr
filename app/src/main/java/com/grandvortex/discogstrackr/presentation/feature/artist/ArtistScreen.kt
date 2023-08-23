@@ -33,11 +33,10 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.grandvortex.discogstrackr.R
+import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
 import com.grandvortex.discogstrackr.data.model.Aliase
 import com.grandvortex.discogstrackr.data.model.Artist
-import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
-import com.grandvortex.discogstrackr.application.utils.onCondition
-import java.lang.StringBuilder
+import com.grandvortex.discogstrackr.presentation.utils.onCondition
 
 @Composable
 fun ArtistRoute(
@@ -131,7 +130,7 @@ fun ArtistContent(
                     .padding(bottom = 14.dp),
                 text = artist.name,
                 maxLines = 1,
-                style = MaterialTheme.typography.headlineLarge,
+                style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis
             )
@@ -141,7 +140,7 @@ fun ArtistContent(
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.artist_real_name),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
@@ -160,7 +159,7 @@ fun ArtistContent(
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.profile),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
@@ -177,7 +176,7 @@ fun ArtistContent(
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.sites),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
 
@@ -199,76 +198,55 @@ fun ArtistContent(
 
             // Artist members
             if (artist.members.isNotEmpty()) {
-                val members = StringBuilder()
-                artist.members.forEachIndexed { index, member ->
-                    if (member.name.isNotEmpty()) {
-                        members.append(member.name)
-                        if (index != artist.members.lastIndex) {
-                            members.append(", ")
-                        }
-                    }
-                }
+                val members = artist.members.joinToString(", ") { it.name }
+
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.artist_members),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(bottom = 14.dp),
-                    text = members.toString(),
+                    text = members,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
 
             // Artist aliases
             if (artist.aliases.isNotEmpty()) {
-                val aliases = StringBuilder()
-                artist.aliases.forEachIndexed { index, alias ->
-                    if (alias.name.isNotEmpty()) {
-                        aliases.append(alias.name)
-                        if (index != artist.aliases.lastIndex) {
-                            aliases.append(", ")
-                        }
-                    }
-                }
+                val aliases = artist.aliases.joinToString(", ") { it.name }
+
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.artist_aliases),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(bottom = 14.dp),
-                    text = aliases.toString(),
+                    text = aliases,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
 
             // Artist name variations
             if (artist.namevariations.isNotEmpty()) {
-                val variations = StringBuilder()
-                artist.namevariations.forEachIndexed { index, variation ->
-                    if (variation.isNotEmpty()) {
-                        variations.append(variation)
-                        if (index != artist.namevariations.lastIndex) {
-                            variations.append(", ")
-                        }
-                    }
-                }
+                val variations = artist.namevariations.joinToString(", ")
+
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.artist_name_variations),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     modifier = modifier.fillMaxWidth(),
-                    text = variations.toString(),
+                    text = variations,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }

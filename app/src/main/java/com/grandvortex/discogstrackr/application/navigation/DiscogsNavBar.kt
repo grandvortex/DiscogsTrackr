@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.presentation.navigation
+package com.grandvortex.discogstrackr.application.navigation
 
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme

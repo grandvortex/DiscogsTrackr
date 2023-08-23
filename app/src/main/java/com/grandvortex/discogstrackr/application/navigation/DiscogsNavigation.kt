@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.presentation.navigation
+package com.grandvortex.discogstrackr.application.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons

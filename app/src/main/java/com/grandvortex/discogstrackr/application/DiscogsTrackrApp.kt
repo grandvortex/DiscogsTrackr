@@ -11,13 +11,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.grandvortex.discogstrackr.presentation.feature.search.SEARCH_ROUTE
-import com.grandvortex.discogstrackr.presentation.navigation.DiscogsNavBar
-import com.grandvortex.discogstrackr.presentation.navigation.DiscogsNavHost
-import com.grandvortex.discogstrackr.presentation.navigation.TabScreen
-import com.grandvortex.discogstrackr.presentation.navigation.navigateToTabScreen
+import com.grandvortex.discogstrackr.application.navigation.DiscogsNavBar
+import com.grandvortex.discogstrackr.application.navigation.DiscogsNavHost
+import com.grandvortex.discogstrackr.application.navigation.TabScreen
+import com.grandvortex.discogstrackr.application.navigation.navigateToTabScreen
 import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
-import com.grandvortex.discogstrackr.application.utils.DevicePreviews
+import com.grandvortex.discogstrackr.presentation.feature.search.SEARCH_ROUTE
+import com.grandvortex.discogstrackr.presentation.utils.DevicePreviews
 
 @Composable
 fun DiscogsTrackrApp() {

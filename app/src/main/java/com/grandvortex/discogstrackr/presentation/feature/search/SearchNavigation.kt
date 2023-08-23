@@ -5,9 +5,6 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
-import com.grandvortex.discogstrackr.data.ResourceType
-import com.grandvortex.discogstrackr.presentation.feature.artist.navigateToArtistScreen
-import com.grandvortex.discogstrackr.presentation.feature.label.navigateToLabelScreen
 
 const val SEARCH_ROUTE = "search"
 

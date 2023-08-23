@@ -33,12 +33,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.grandvortex.discogstrackr.R
+import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
 import com.grandvortex.discogstrackr.data.model.Label
 import com.grandvortex.discogstrackr.data.model.LabelImage
 import com.grandvortex.discogstrackr.data.model.ParentLabel
 import com.grandvortex.discogstrackr.data.model.Sublabel
-import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
-import java.lang.StringBuilder
 
 @Composable
 fun LabelRoute(
@@ -89,12 +88,12 @@ fun LabelScreen(
             Text(text = stringResource(id = R.string.unknown_label))
         }
     } else {
-        LabelConent(modifier = modifier, label = viewState.labelData)
+        LabelContent(modifier = modifier, label = viewState.labelData)
     }
 }
 
 @Composable
-fun LabelConent(modifier: Modifier, label: Label) {
+fun LabelContent(modifier: Modifier, label: Label) {
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -129,7 +128,7 @@ fun LabelConent(modifier: Modifier, label: Label) {
                     .padding(bottom = 14.dp),
                 text = label.name,
                 maxLines = 1,
-                style = MaterialTheme.typography.headlineLarge,
+                style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold,
                 overflow = TextOverflow.Ellipsis
             )
@@ -139,7 +138,7 @@ fun LabelConent(modifier: Modifier, label: Label) {
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.profile),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
@@ -153,26 +152,19 @@ fun LabelConent(modifier: Modifier, label: Label) {
 
             // Label sublabels
             if (label.sublabels.isNotEmpty()) {
-                val sublabels = StringBuilder()
-                label.sublabels.forEachIndexed { index, sublabel ->
-                    if (sublabel.name.isNotEmpty()) {
-                        sublabels.append(sublabel.name)
-                        if (index != label.sublabels.lastIndex) {
-                            sublabels.append(", ")
-                        }
-                    }
-                }
+                val sublabels = label.sublabels.joinToString(", ") { it.name }
+
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.label_sublabels),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
                     modifier = modifier
                         .fillMaxWidth()
                         .padding(bottom = 14.dp),
-                    text = sublabels.toString(),
+                    text = sublabels,
                     style = MaterialTheme.typography.bodyLarge
                 )
             }
@@ -182,7 +174,7 @@ fun LabelConent(modifier: Modifier, label: Label) {
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.label_parent),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
@@ -201,7 +193,7 @@ fun LabelConent(modifier: Modifier, label: Label) {
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.label_contact_info),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
                 Text(
@@ -220,7 +212,7 @@ fun LabelConent(modifier: Modifier, label: Label) {
                 Text(
                     modifier = modifier.fillMaxWidth(),
                     text = stringResource(id = R.string.sites),
-                    style = MaterialTheme.typography.titleLarge,
+                    style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
 
@@ -250,7 +242,7 @@ fun LabelConent(modifier: Modifier, label: Label) {
 @Composable
 fun LabelContentPreview() {
     DiscogsTrackrTheme {
-        LabelConent(
+        LabelContent(
             modifier = Modifier, label = Label(
                 contactInfo = "Good Looking Records, 84 Queens Road, Watford, Herts WD17 2LA UK Phone: +44(0) 1923 690 700", // ktlint-disable max-line-length
                 dataQuality = "Correct",
