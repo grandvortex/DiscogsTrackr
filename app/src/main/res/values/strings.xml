@@ -28,4 +28,6 @@
     <string name="country">Country:</string>
     <string name="format">Format:</string>
     <string name="label_contact_info">Contact Info:</string>
+    <string name="release_tabitem_info">Info</string>
+    <string name="release_tabitem_tracklist">Tracklist</string>
 </resources>
