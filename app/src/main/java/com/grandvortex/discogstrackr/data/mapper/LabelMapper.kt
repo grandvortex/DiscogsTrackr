@@ -1,9 +1,9 @@
 package com.grandvortex.discogstrackr.data.mapper
 
-import com.grandvortex.discogstrackr.data.model.Label
-import com.grandvortex.discogstrackr.data.model.LabelImage
-import com.grandvortex.discogstrackr.data.model.ParentLabel
-import com.grandvortex.discogstrackr.data.model.Sublabel
+import com.grandvortex.discogstrackr.domain.model.Label
+import com.grandvortex.discogstrackr.domain.model.LabelImage
+import com.grandvortex.discogstrackr.domain.model.ParentLabel
+import com.grandvortex.discogstrackr.domain.model.Sublabel
 import com.grandvortex.discogstrackr.data.remote.dto.LabelDTO
 
 fun LabelDTO.toLabel(): Label {

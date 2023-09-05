@@ -3,9 +3,9 @@ package com.grandvortex.discogstrackr.presentation.feature.release
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.grandvortex.discogstrackr.data.model.Release
-import com.grandvortex.discogstrackr.data.remote.RemoteResult
+import com.grandvortex.discogstrackr.data.Result
 import com.grandvortex.discogstrackr.domain.ReleaseUseCase
+import com.grandvortex.discogstrackr.domain.model.Release
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,9 +31,9 @@ class ReleaseViewModel @Inject constructor(
         }
     }
 
-    private fun updateState(result: RemoteResult<Release>) {
+    private fun updateState(result: Result<Release>) {
         when (result) {
-            is RemoteResult.Success -> {
+            is Result.Success -> {
                 _viewStateFlow.update { state ->
                     state.copy(
                         isLoading = false, releaseData = result.data
@@ -42,7 +42,7 @@ class ReleaseViewModel @Inject constructor(
             }
 
 
-            is RemoteResult.Error -> {
+            is Result.Error -> {
                 _viewStateFlow.update { state ->
                     state.copy(
                         isLoading = false, error = result.e.message ?: ""

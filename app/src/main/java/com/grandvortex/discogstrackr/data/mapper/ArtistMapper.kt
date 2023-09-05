@@ -1,9 +1,9 @@
 package com.grandvortex.discogstrackr.data.mapper
 
-import com.grandvortex.discogstrackr.data.model.Aliase
-import com.grandvortex.discogstrackr.data.model.Artist
-import com.grandvortex.discogstrackr.data.model.Image
-import com.grandvortex.discogstrackr.data.model.Member
+import com.grandvortex.discogstrackr.domain.model.Aliase
+import com.grandvortex.discogstrackr.domain.model.Artist
+import com.grandvortex.discogstrackr.domain.model.Image
+import com.grandvortex.discogstrackr.domain.model.Member
 import com.grandvortex.discogstrackr.data.remote.dto.ArtistDTO
 
 fun ArtistDTO.toArtist(): Artist {

@@ -34,8 +34,8 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.grandvortex.discogstrackr.R
 import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
-import com.grandvortex.discogstrackr.data.model.Aliase
-import com.grandvortex.discogstrackr.data.model.Artist
+import com.grandvortex.discogstrackr.domain.model.Aliase
+import com.grandvortex.discogstrackr.domain.model.Artist
 import com.grandvortex.discogstrackr.presentation.utils.onCondition
 
 @Composable

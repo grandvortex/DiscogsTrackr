@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.data.model
+package com.grandvortex.discogstrackr.domain.model
 
 import com.grandvortex.discogstrackr.data.ResourceType
 

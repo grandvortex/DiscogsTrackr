@@ -6,7 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import com.grandvortex.discogstrackr.data.model.Release
+import com.grandvortex.discogstrackr.domain.model.Release
 
 @Composable
 fun ReleaseTracklist(modifier: Modifier, release: Release) {

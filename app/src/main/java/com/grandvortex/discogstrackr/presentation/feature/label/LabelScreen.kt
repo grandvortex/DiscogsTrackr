@@ -34,10 +34,10 @@ import coil.request.ImageRequest
 import coil.size.Size
 import com.grandvortex.discogstrackr.R
 import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
-import com.grandvortex.discogstrackr.data.model.Label
-import com.grandvortex.discogstrackr.data.model.LabelImage
-import com.grandvortex.discogstrackr.data.model.ParentLabel
-import com.grandvortex.discogstrackr.data.model.Sublabel
+import com.grandvortex.discogstrackr.domain.model.Label
+import com.grandvortex.discogstrackr.domain.model.LabelImage
+import com.grandvortex.discogstrackr.domain.model.ParentLabel
+import com.grandvortex.discogstrackr.domain.model.Sublabel
 
 @Composable
 fun LabelRoute(

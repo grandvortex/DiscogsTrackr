@@ -1,8 +1,10 @@
 package com.grandvortex.discogstrackr.domain
 
-import com.grandvortex.discogstrackr.data.model.RecentSearch
+import com.grandvortex.discogstrackr.data.mapper.toRecentSearch
 import com.grandvortex.discogstrackr.data.repository.parent.RecentSearchQueryRepository
+import com.grandvortex.discogstrackr.domain.model.RecentSearch
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class RecentSearchQueryUseCase @Inject constructor(
@@ -11,6 +13,7 @@ class RecentSearchQueryUseCase @Inject constructor(
 
     fun getAllRecentSearchQueries(): Flow<List<RecentSearch>> {
         return recentSearchRepository.getAllRecentSearchQueries()
+            .map { list -> list.map { entity -> entity.toRecentSearch() } }
     }
 
     suspend fun upsertSearchQuery(query: String) {

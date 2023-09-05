@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.data.model
+package com.grandvortex.discogstrackr.domain.model
 
 import kotlinx.datetime.Instant
 

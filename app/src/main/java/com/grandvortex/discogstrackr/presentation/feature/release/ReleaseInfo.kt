@@ -22,13 +22,13 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.grandvortex.discogstrackr.R
 import com.grandvortex.discogstrackr.application.theme.DiscogsTrackrTheme
-import com.grandvortex.discogstrackr.data.model.Release
-import com.grandvortex.discogstrackr.data.model.ReleaseArtist
-import com.grandvortex.discogstrackr.data.model.ReleaseCommunity
-import com.grandvortex.discogstrackr.data.model.ReleaseFormat
-import com.grandvortex.discogstrackr.data.model.ReleaseRating
-import com.grandvortex.discogstrackr.data.model.ReleaseSubinfo
-import com.grandvortex.discogstrackr.data.model.ReleaseSubmitter
+import com.grandvortex.discogstrackr.domain.model.Release
+import com.grandvortex.discogstrackr.domain.model.ReleaseArtist
+import com.grandvortex.discogstrackr.domain.model.ReleaseCommunity
+import com.grandvortex.discogstrackr.domain.model.ReleaseFormat
+import com.grandvortex.discogstrackr.domain.model.ReleaseRating
+import com.grandvortex.discogstrackr.domain.model.ReleaseSubinfo
+import com.grandvortex.discogstrackr.domain.model.ReleaseSubmitter
 import com.grandvortex.discogstrackr.presentation.utils.onCondition
 
 @Composable

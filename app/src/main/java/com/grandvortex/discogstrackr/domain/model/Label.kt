@@ -1,4 +1,4 @@
-package com.grandvortex.discogstrackr.data.model
+package com.grandvortex.discogstrackr.domain.model
 
 data class Label(
     val contactInfo: String,

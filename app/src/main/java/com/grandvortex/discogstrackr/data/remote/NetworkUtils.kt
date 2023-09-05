@@ -1,6 +1,8 @@
 package com.grandvortex.discogstrackr.data.remote
 
 import com.grandvortex.discogstrackr.BuildConfig
+import com.grandvortex.discogstrackr.data.Result
+import com.squareup.moshi.Moshi
 
 data class BaseUrl(val value: String)
 
@@ -13,10 +15,14 @@ object Credentials {
     }
 }
 
-suspend fun <T> safeRemoteCall(remoteCall: suspend () -> T): RemoteResult<T> {
+suspend fun <T> safeRemoteCall(remoteCall: suspend () -> T): Result<T> {
     return try {
-        RemoteResult.Success(remoteCall())
+        Result.Success(remoteCall())
     } catch (throwable: Throwable) {
-        RemoteResult.Error(throwable)
+        Result.Error(throwable)
     }
 }
+
+inline fun <reified T> Moshi.toJson(data: T): String? = adapter(T::class.java).toJson(data)
+
+inline fun <reified T> Moshi.fromJson(json: String): T? = adapter(T::class.java).fromJson(json)

@@ -3,9 +3,9 @@ package com.grandvortex.discogstrackr.presentation.feature.artist
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.grandvortex.discogstrackr.data.model.Artist
-import com.grandvortex.discogstrackr.data.remote.RemoteResult
+import com.grandvortex.discogstrackr.data.Result
 import com.grandvortex.discogstrackr.domain.ArtistUseCase
+import com.grandvortex.discogstrackr.domain.model.Artist
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,9 +31,9 @@ class ArtistViewModel @Inject constructor(
         }
     }
 
-    private fun updateState(result: RemoteResult<Artist>) {
+    private fun updateState(result: Result<Artist>) {
         when (result) {
-            is RemoteResult.Success -> {
+            is Result.Success -> {
                 _viewStateFlow.update { state ->
                     state.copy(
                         isLoading = false, artistData = result.data
@@ -41,7 +41,7 @@ class ArtistViewModel @Inject constructor(
                 }
             }
 
-            is RemoteResult.Error -> {
+            is Result.Error -> {
                 _viewStateFlow.update { state ->
                     state.copy(
                         isLoading = false, error = result.e.message ?: ""

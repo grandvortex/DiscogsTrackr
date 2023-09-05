@@ -3,9 +3,9 @@ package com.grandvortex.discogstrackr.presentation.feature.label
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.grandvortex.discogstrackr.data.model.Label
-import com.grandvortex.discogstrackr.data.remote.RemoteResult
+import com.grandvortex.discogstrackr.data.Result
 import com.grandvortex.discogstrackr.domain.LabelUseCase
+import com.grandvortex.discogstrackr.domain.model.Label
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -31,9 +31,9 @@ class LabelViewModel @Inject constructor(
         }
     }
 
-    private fun updateState(result: RemoteResult<Label>) {
+    private fun updateState(result: Result<Label>) {
         when (result) {
-            is RemoteResult.Success -> {
+            is Result.Success -> {
                 _viewStateFlow.update { state ->
                     state.copy(
                         isLoading = false, labelData = result.data
@@ -41,7 +41,7 @@ class LabelViewModel @Inject constructor(
                 }
             }
 
-            is RemoteResult.Error -> {
+            is Result.Error -> {
                 _viewStateFlow.update { state ->
                     state.copy(
                         isLoading = false, error = result.e.message ?: ""

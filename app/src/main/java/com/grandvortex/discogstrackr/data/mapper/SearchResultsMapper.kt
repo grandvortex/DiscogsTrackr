@@ -1,11 +1,11 @@
 package com.grandvortex.discogstrackr.data.mapper
 
-import com.grandvortex.discogstrackr.data.model.Community
-import com.grandvortex.discogstrackr.data.model.Format
-import com.grandvortex.discogstrackr.data.model.Pagination
-import com.grandvortex.discogstrackr.data.model.SearchResult
-import com.grandvortex.discogstrackr.data.model.SearchResults
-import com.grandvortex.discogstrackr.data.model.Urls
+import com.grandvortex.discogstrackr.domain.model.Community
+import com.grandvortex.discogstrackr.domain.model.Format
+import com.grandvortex.discogstrackr.domain.model.Pagination
+import com.grandvortex.discogstrackr.domain.model.SearchResult
+import com.grandvortex.discogstrackr.domain.model.SearchResults
+import com.grandvortex.discogstrackr.domain.model.Urls
 import com.grandvortex.discogstrackr.data.remote.dto.SearchResultsDTO
 import com.grandvortex.discogstrackr.data.toResourceType
 

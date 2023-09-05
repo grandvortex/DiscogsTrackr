@@ -34,7 +34,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import coil.size.Size
 import com.grandvortex.discogstrackr.R
-import com.grandvortex.discogstrackr.data.model.Release
+import com.grandvortex.discogstrackr.domain.model.Release
 import kotlinx.coroutines.launch
 
 typealias ComposableFun = @Composable (modifier: Modifier, release: Release) -> Unit

@@ -1,7 +1,7 @@
 package com.grandvortex.discogstrackr.presentation.feature.search
 
-import com.grandvortex.discogstrackr.data.model.RecentSearch
-import com.grandvortex.discogstrackr.data.model.SearchResults
+import com.grandvortex.discogstrackr.domain.model.RecentSearch
+import com.grandvortex.discogstrackr.domain.model.SearchResults
 
 data class SearchViewState(
     val isLoading: Boolean = false,

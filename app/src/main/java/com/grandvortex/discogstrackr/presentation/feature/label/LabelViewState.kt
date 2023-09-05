@@ -1,6 +1,6 @@
 package com.grandvortex.discogstrackr.presentation.feature.label
 
-import com.grandvortex.discogstrackr.data.model.Label
+import com.grandvortex.discogstrackr.domain.model.Label
 
 data class LabelViewState(
     val isLoading: Boolean = false,
