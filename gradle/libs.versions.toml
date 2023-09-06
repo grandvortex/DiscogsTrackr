@@ -33,7 +33,7 @@ moshi = "1.15.0"
 room = "2.5.2"
 
 # Hilt
-hiltGradlePlugin = "2.47"
+hiltGradlePlugin = "2.48"
 hiltNavigationCompose = "1.0.0"
 
 # Coil
@@ -49,7 +49,7 @@ androidCoreKtx = "1.10.1"
 appcompat = "1.6.1"
 
 # Kotlin Date and Time
-kotlinDateTime = "0.4.0"
+kotlinDateTime = "0.4.1"
 
 # Kotlin Symbol Processing - KSP
 kotlinSymbolProcessing = "1.9.0-1.0.11"
@@ -143,7 +143,6 @@ android_library = { id = "com.android.library", version.ref = "androidGradlePlug
 
 # Kotlin
 kotlin_android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin_kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 
 # Kotlin Symbol Processing - KSP
 kotlin_ksp = { id = "com.google.devtools.ksp", version.ref = "kotlinSymbolProcessing" }

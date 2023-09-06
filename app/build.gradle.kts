@@ -2,7 +2,6 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.ksp)
-    alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
 }
 
@@ -22,10 +21,6 @@ android {
         // Designate a directory for Room database schema for versioning (useful when updating database version for comparison)
         ksp {
             arg("room.schemaLocation", "$projectDir/schemas")
-        }
-
-        kapt {
-            correctErrorTypes = true
         }
 
         // Discogs key and secret to use the service
@@ -151,17 +146,17 @@ dependencies {
     implementation(libs.moshi.kotlin)
 
     // Hilt
-    kapt(libs.hilt.android.compiler)
+    ksp(libs.hilt.android.compiler)
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
 
     // Hilt for instrumentation tests
     androidTestImplementation(libs.hilt.android.testing)
-    kaptAndroidTest(libs.hilt.compiler)
+    kspAndroidTest(libs.hilt.compiler)
 
     // Hilt for local unit tests
     testImplementation(libs.hilt.android.testing)
-    kaptTest(libs.hilt.compiler)
+    kspTest(libs.hilt.compiler)
 
     // Android Testing
     testImplementation(libs.junit)
