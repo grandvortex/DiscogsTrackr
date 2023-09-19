@@ -1,5 +1,8 @@
 package com.grandvortex.discogstrackr.data.mapper
 
+import com.grandvortex.discogstrackr.data.remote.dto.ReleaseArtistDTO
+import com.grandvortex.discogstrackr.data.remote.dto.ReleaseDTO
+import com.grandvortex.discogstrackr.data.remote.dto.ReleaseSubinfoDTO
 import com.grandvortex.discogstrackr.domain.model.Release
 import com.grandvortex.discogstrackr.domain.model.ReleaseArtist
 import com.grandvortex.discogstrackr.domain.model.ReleaseCommunity
@@ -12,9 +15,6 @@ import com.grandvortex.discogstrackr.domain.model.ReleaseSubinfo
 import com.grandvortex.discogstrackr.domain.model.ReleaseSubmitter
 import com.grandvortex.discogstrackr.domain.model.ReleaseTrack
 import com.grandvortex.discogstrackr.domain.model.ReleaseVideo
-import com.grandvortex.discogstrackr.data.remote.dto.ReleaseArtistDTO
-import com.grandvortex.discogstrackr.data.remote.dto.ReleaseDTO
-import com.grandvortex.discogstrackr.data.remote.dto.ReleaseSubinfoDTO
 
 fun ReleaseDTO.toRelease(): Release {
     val releaseContributors = community?.contributors?.map { dto ->
@@ -62,14 +62,14 @@ fun ReleaseDTO.toRelease(): Release {
         )
     } ?: emptyList()
 
-    val releaseTrackList = tracklist?.map { dto ->
+    val releaseTrackList = tracklist?.filter { dto -> dto.type.equals("track", true) }?.map { dto ->
         ReleaseTrack(
             duration = dto.duration ?: "",
             position = dto.position ?: "",
             title = dto.title ?: "",
             type = dto.type ?: "",
-            extraartists = extraartists.toReleaseArtist(),
-            artists = artists.toReleaseArtist()
+            extraartists = dto.extraartists.toReleaseArtist(),
+            artists = dto.artists.toReleaseArtist()
         )
     } ?: emptyList()
 

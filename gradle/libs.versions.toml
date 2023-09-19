@@ -9,16 +9,16 @@ kotlin = "1.9.0"
 androidGradlePlugin = "8.1.1"
 
 # Compose BOM
-composeBOM = "2023.08.00"
+composeBOM = "2023.09.00"
 
 # Navigation Compose
-navigationCompose = "2.7.1"
+navigationCompose = "2.7.2"
 
 # Activity Compose
 activityCompose = "1.7.2"
 
 # Lifecycle
-lifecycle = "2.6.1"
+lifecycle = "2.6.2"
 
 # OKHTTP BOM
 okhttpBOM = "4.10.0"
@@ -43,7 +43,7 @@ coil = "2.4.0"
 coroutines = "1.7.3"
 
 # Android Core KTX
-androidCoreKtx = "1.10.1"
+androidCoreKtx = "1.12.0"
 
 # Appcompat
 appcompat = "1.6.1"
@@ -87,7 +87,6 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 retrofit_converter_moshi = { module = "com.squareup.retrofit2:converter-moshi", version.ref = "retrofit" }
 
 # Moshi
-moshi_kotlin_codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 moshi_kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "moshi" }
 
 # Lifecycle Scopes and Architectural Components

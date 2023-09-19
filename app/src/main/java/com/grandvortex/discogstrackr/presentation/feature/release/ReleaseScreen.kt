@@ -138,7 +138,7 @@ fun ReleaseContent(
             error = painterResource(R.drawable.broken_image),
             placeholder = painterResource(id = R.drawable.loading_image),
             contentDescription = release.title,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.FillWidth
         )
 
         // Release info and tracklist

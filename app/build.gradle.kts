@@ -142,7 +142,6 @@ dependencies {
     implementation(libs.retrofit.converter.moshi)
 
     // Moshi
-    ksp(libs.moshi.kotlin.codegen)
     implementation(libs.moshi.kotlin)
 
     // Hilt
