@@ -32,7 +32,6 @@ fun DiscogsTrackrApp() {
         Scaffold(
             modifier = Modifier.fillMaxSize(),
             snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
-            topBar = {},
             bottomBar = {
                 DiscogsNavBar(
                     currentRoute
@@ -40,7 +39,9 @@ fun DiscogsTrackrApp() {
             }
         ) { paddingValues ->
             DiscogsNavHost(
-                modifier = Modifier.fillMaxSize().padding(paddingValues),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues),
                 navController = navController,
                 snackbarHostState = snackbarHostState
             )

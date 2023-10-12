@@ -16,3 +16,19 @@ fun <T> Flow<T>.asResult(): Flow<Result<T>> {
         }
         .catch { emit(Result.Error(it)) }
 }
+
+fun <T> Result<out T>.onSuccess(block: (data: T) -> Unit): Result<T> {
+    if (this is Result.Success) {
+        block.invoke(data)
+    }
+    return this
+}
+
+fun <T> Result<out T>.onError(block: (e: Throwable) -> Unit): Result<T> {
+    if (this is Result.Error) {
+        block.invoke(e)
+    }
+    return this
+}
+
+
