@@ -6,10 +6,10 @@ compose = "1.5.1"
 kotlin = "1.9.0"
 
 # Android Gradle Plugin
-androidGradlePlugin = "8.1.2"
+androidGradlePlugin = "8.2.0"
 
 # Compose BOM
-composeBOM = "2023.10.00"
+composeBOM = "2023.10.01"
 
 # Navigation Compose
 navigationCompose = "2.7.4"
@@ -30,7 +30,7 @@ retrofit = "2.9.0"
 moshi = "1.15.0"
 
 # Room
-room = "2.5.2"
+room = "2.6.0"
 
 # Hilt
 hiltGradlePlugin = "2.48.1"
